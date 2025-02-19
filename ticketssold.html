@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Tickets</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+        document.getElementById('show options').style.display = 'none';
+        document.getElementById('hide options').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+        document.getElementById('show options').style.display = 'block';
+        document.getElementById('hide options').style.display = 'none';
+			}
+		}
+    function newTicket() { showform('insert'); }
+    function updateTicket(pid) { showform('update'); }
+    function deleteTicket(pid) { showform ('delete'); }
+    function browseTickets() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseTickets()">
+<h1>Tickets Page</h1>
+<h2>Add, update, or delete our list of Tickets</h2>
+
+[ <a href="index.html">Home Page</a> | <a href="events.html">Events</a> | <a href="organizers.html">Organizers</a> | <a href="ticketbuyers.html">Ticket Buyers</a> | <a href="ticketssold.html">Tickets</a>]
+
+<div id="browse">
+  <p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
+    <a href="#" onClick="browseTickets()" id="hide options"> Click to remove options</a> </p>
+<table border="1" cellpadding="5">
+  <tr>
+    <th><a href="#" onClick="newTicket()">Add Ticket</a></th>
+    <th></th>
+    <th>Ticket ID</th>
+    <th>Price</th>
+    <th>Section</th>
+    <th>Seat</th>
+    <th>Parking Included</th>
+    <th>Event ID</th>
+    <th>Ticket Buyer ID</th>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTicket('this.ticketID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTicket('this.ticketID')">Delete</a></td>
+    <td align="right" >1</td>
+    <td >100</td>
+    <td >100</td>
+    <td>1</td>
+    <td>No</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTicket('this.ticketID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTicket('this.ticketID')">Delete</a></td>
+    <td align="right" >2</td>
+    <td >100</td>
+    <td >100</td>
+    <td>2</td>
+    <td>No</td>
+    <td>1</td>
+    <td>1</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateTicket('this.ticketID')">Edit</a></td>
+    <td><a href="#" onclick="deleteTicket('this.ticketID')">Delete</a></td>
+    <td align="right">3</td>
+    <td >50</td>
+    <td >127</td>
+    <td>5</td>
+    <td>Yes</td>
+    <td>2</td>
+    <td>4</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addTicket">
+        <legend><strong>Add Ticket </strong></legend>
+          <fieldset class="fields">
+            <label> Price </label> <input type="number" name="price">
+            <label> Seat </label> <input type="number" name="Seat">
+            <label> Section </label> <select name="section">
+            	<option value="0">&nbsp;</option>
+                <option value="1" selected>100</option>
+                <option value="2">110</option>
+                <option value="3">127</option>
+                </select>
+            <label> Parking Included </label> <select name="parking">
+              <option value="No" selected>No</option>
+              <option vlaue="Yes">Yes</option>
+              </select>
+            <label> Event ID </label> <input type="number" name="eventID">
+            <label> Ticket Buyer ID <input type="number" name="ticketBuyerID">
+      </fieldset>
+          <input class="btn" type="submit" id="addTicket" value="Add Ticket ">
+          <input class="btn" type="button" value="Cancel" onClick="browseTickets()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+  <br>
+    <form method="POST" id="UpdateTicket">
+        <legend><strong>Update Ticket</strong></legend>
+          <fieldset class="fields">
+          <input type="hidden" name="ticketID" id="updateTicketID" value="1">
+            <label> <strong> ID: </strong></label> 1
+            <br>
+            <label><strong> Price: </strong></label> 100 <!--Will auto populate with backend-->
+            <br>
+            <label><strong> Seat: </strong></label> 1 <!--Will auto populate with backend-->
+            <br>
+            <label><strong> Section: </strong></label> 100
+            <br>
+            <label><strong>Parking Included: </strong> </label> <select name="parking">
+              <option value="No" selected>No</option>
+              <option vlaue="Yes">Yes</option>
+              </select>
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveTicket" value="Save Update Ticket ">
+          <input class="btn" type="button" value="Cancel" onClick="browseTickets()">
+	  </form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteTicket">
+      <legend><strong>Delete Ticket </strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="ticketID" id="deleteticketID" value="1">
+          <label><strong>ID:</strong></label> 1
+          <br>
+          <label> <strong> Ticket Prcie: </strong> </label> 100
+          <br> <strong>Section:</strong> 100
+          <br> <strong>Seat:</strong> 1        
+    </fieldset>
+        <input class="btn" type="submit" id="DeleteTicket" value="Delete Ticket ">
+        <input class="btn" type="button" value="Cancel" onClick="browseTickets()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Organizers</title>
+<link href="style.css" rel="stylesheet" type="text/css" />
+<script language="JavaScript">
+		function showform(dowhat) {
+			/*
+			* four DIVS: browse, insert, update, delete
+			* this function sets one visible the others not
+			*/
+			if (dowhat == 'insert'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'update'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'none';
+			}
+			else if (dowhat == 'delete'){
+				document.getElementById('browse').style.display = 'none';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'block';
+			}
+      else if (dowhat == 'all'){
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'block';
+				document.getElementById('update').style.display = 'block';
+				document.getElementById('delete').style.display = 'block';
+        document.getElementById('show options').style.display = 'none';
+        document.getElementById('hide options').style.display = 'block';
+			}
+			else { //by default display browse
+				document.getElementById('browse').style.display = 'block';
+				document.getElementById('insert').style.display = 'none';
+				document.getElementById('update').style.display = 'none';
+				document.getElementById('delete').style.display = 'none';
+        document.getElementById('show options').style.display = 'block';
+        document.getElementById('hide options').style.display = 'none';
+			}
+		}
+    function newOrganizer() { showform('insert'); }
+    function updateOrganizer(pid) { showform('update'); }
+    function deleteOrganizer(pid) { showform ('delete'); }
+    function browseOrganizers() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseOrganizers()">
+<h1>Organizers Page</h1>
+<h2>Add, update, or delete our list of Organizers</h2>
+
+[ <a href="index.html">Home Page</a> | <a href="events.html">Events</a> | <a href="organizers.html">Organizers</a> | <a href="ticketbuyers.html">Ticket Buyers</a> | <a href="ticketssold.html">Tickets</a>]
+
+<div id="browse">
+  <p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
+    <a href="#" onClick="browseOrganizers()" id="hide options"> Click to remove options</a> </p>
+<table border="1" cellpadding="5">
+  <tr>
+    <th><a href="#" onClick="newOrganizer()">Add Organizer</a></th>
+    <th></th>
+    <th>organizerID</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Company Name</th>
+    <th>Email</th>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateOrganizer('this.organizerID')">Edit</a></td>
+    <td><a href="#" onclick="deleteOrganizer('this.organizerID')">Delete</a></td>
+    <td align="right" >1</td>
+    <td >Michael</td>
+    <td >Rapino</td>
+    <td>Live Nation</td>
+    <td>fakeemail@livenation.com</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateOrganizer('this.organizerID')">Edit</a></td>
+    <td><a href="#" onclick="deleteOrganizer('this.organizerID')">Delete</a></td>
+    <td align="right" >2</td>
+    <td>Paul</td>
+    <td>Tollett</td>
+    <td>Goldenvoice</td>
+    <td>notarealemail@gv.com</td>
+  </tr>
+  <tr>
+    <td><a href="#" onClick="updateOrganizer('this.organizerID')">Edit</a></td>
+    <td><a href="#" onclick="deleteOrganizer('this.organizerID')">Delete</a></td>
+    <td align="right">3</td>
+    <td>Kim</td>
+    <td>Noltemy</td>
+    <td>Fairiew Philharmonic</td>
+    <td>mailerdaemenincoming@fp.com</td>
+  </tr>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addOrganizer">
+        <legend><strong>Add Organizer</strong></legend>
+          <fieldset class="fields">
+            <label> First Name </label> <input type="text" name="firstname">
+            <label> Last Name </label> <input type="text" name="lastname">
+            <label> Company Name </label> <input type="text" name="companyname">
+            <label> Email </label> <input type="email" name="email">
+      </fieldset>
+          <input class="btn" type="submit" id="addOrganizer" value="Add Organizer">
+          <input class="btn" type="button" value="Cancel" onClick="browseOrganizers()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+  <br>
+    <form method="POST" id="UpdateOrganizer">
+        <legend><strong>Update Organizer</strong></legend>
+          <fieldset class="fields">
+          <input type="hidden" name="organizerID" id="updateorganizerID" value="1">
+          <label> ID: </label> 1
+            <label> First Name </label> <input type="text" name="firstname" value="Michael">
+            <label> Last Name </label> <input type="text" name="lastname" value="Rapino">
+            <label> Company Name </label> <input type="text" name="companyname" value="Livenation">
+            <label> Email </label> <input type="email" name="email" value="fakeemail@livenation.com">
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveOrganizer" value="Save Update Organizer">
+          <input class="btn" type="button" value="cancel" onClick="browseOrganizers()">
+	  </form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteOrganizer">
+      <legend><strong>Delete Organizer</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="OrganizerID" id="deleteorganizerID" value="1">
+          <label><strong>ID:</strong></label> 1
+          <br>
+          <label> <strong> Organizer Name: </strong> </label> Michael Rapino
+          <br>
+          <label> <strong> Company: </strong></label> Livenation
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteOrganizer" value="Delete Organizer">
+          <input class="btn" type="button" value="Cancel" onClick="browseOrganizers()">
+  </form> 
+</div><!-- delete -->
+
+</body>
+</html>
