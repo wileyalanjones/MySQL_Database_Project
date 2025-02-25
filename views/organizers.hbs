@@ -1,0 +1,117 @@
+<script language="JavaScript">
+    function showform(dowhat) {
+        /*
+        * four DIVS: browse, insert, update, delete
+        * this function sets one visible the others not
+        */
+        if (dowhat == 'insert'){
+            document.getElementById('browse').style.display = 'none';
+            document.getElementById('insert').style.display = 'block';
+            document.getElementById('update').style.display = 'none';
+            document.getElementById('delete').style.display = 'none';
+        }
+        else if (dowhat == 'update'){
+            document.getElementById('browse').style.display = 'none';
+            document.getElementById('insert').style.display = 'none';
+            document.getElementById('update').style.display = 'block';
+            document.getElementById('delete').style.display = 'none';
+        }
+        else if (dowhat == 'delete'){
+            document.getElementById('browse').style.display = 'none';
+            document.getElementById('insert').style.display = 'none';
+            document.getElementById('update').style.display = 'none';
+            document.getElementById('delete').style.display = 'block';
+        }
+        else if (dowhat == 'all'){
+            document.getElementById('browse').style.display = 'block';
+            document.getElementById('insert').style.display = 'block';
+            document.getElementById('update').style.display = 'block';
+            document.getElementById('delete').style.display = 'block';
+            document.getElementById('show options').style.display = 'none';
+            document.getElementById('hide options').style.display = 'block';
+        }
+        else { //by default display browse
+            document.getElementById('browse').style.display = 'block';
+            document.getElementById('insert').style.display = 'none';
+            document.getElementById('update').style.display = 'none';
+            document.getElementById('delete').style.display = 'none';
+            document.getElementById('show options').style.display = 'block';
+            document.getElementById('hide options').style.display = 'none';
+        }
+    }
+    function newOrganizer() { showform('insert'); }
+    function updateOrganizer(pid) { showform('update'); }
+    function browseOrganizers() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+<script src="./js/deleteOrganizer.js"></script>
+
+<body onload="browseOrganizers()">
+<h1>Organizers Page</h1>
+<h2>Add, update, or delete our list of Organizers</h2>
+
+[ <a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
+
+<div id="browse">
+  <p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
+    <a href="#" onClick="browseOrganizers()" id="hide options"> Click to remove options</a> </p>
+<table border="1" cellpadding="5" id="organizer-table">
+  <thead>
+    <tr>
+        <th><a href="#" onClick="newOrganizer()">Add Organizer</a></th>
+        <th></th>
+        <th>Organizer ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Company Name</th>
+        <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+    <tr data-value="{{this.organizerID}}">
+        <td><a href="#" onClick="updateOrganizer({{this.organizerID}})">Edit</a></td>
+        <td><button onclick='deleteOrganizer({{this.organizerID}})'>Delete</button></td>
+        <td>{{this.organizerID}}</td>
+        <td>{{this.firstName}}</td>
+        <td>{{this.lastName}}</td>
+        <td>{{this.companyName}}</td>
+        <td>{{this.email}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addOrganizer" action="/addOrganizer">
+        <legend><strong>Add Organizer</strong></legend>
+          <fieldset class="fields">
+            <label> First Name </label> <input type="text" name="input-organizer-firstname" id="input-organizer-firstname" required>
+            <label> Last Name </label> <input type="text" name="input-organizer-lastname" id="input-organizer-lastname" required>
+            <label> Company Name </label> <input type="text" name="input-companyname" id="input-companyname">
+            <label> Email </label> <input type="email" name="input-organizer-email" id="input-organizer-email" required>
+          </fieldset>
+        <input class="btn" type="submit" id="addOrganizer-button" value="Add Organizer">
+        <input class="btn" type="button" value="Cancel" onClick="browseOrganizers()">
+	</form> 
+
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+  <br>
+    <form method="POST" id="UpdateOrganizer">
+        <legend><strong>Update Organizer</strong></legend>
+          <fieldset class="fields">
+          <input type="hidden" name="organizerID" id="updateorganizerID" value="1">
+          <label> ID: </label> 1
+            <label> First Name </label> <input type="text" name="firstname" value="Michael">
+            <label> Last Name </label> <input type="text" name="lastname" value="Rapino">
+            <label> Company Name </label> <input type="text" name="companyname" value="Livenation">
+            <label> Email </label> <input type="email" name="email" value="fakeemail@livenation.com">
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveOrganizer" value="Save Update Organizer">
+          <input class="btn" type="button" value="cancel" onClick="browseOrganizers()">
+	  </form> 
+</div><!-- update -->

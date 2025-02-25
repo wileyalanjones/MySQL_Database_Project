@@ -1,0 +1,144 @@
+<script language="JavaScript">
+    function showform(dowhat) {
+        /*
+        * four DIVS: browse, insert, update, delete
+        * this function sets one visible the others not
+        */
+        if (dowhat == 'insert'){
+            document.getElementById('browse').style.display = 'none';
+            document.getElementById('insert').style.display = 'block';
+            document.getElementById('update').style.display = 'none';
+            document.getElementById('delete').style.display = 'none';
+        }
+        else if (dowhat == 'update'){
+            document.getElementById('browse').style.display = 'none';
+            document.getElementById('insert').style.display = 'none';
+            document.getElementById('update').style.display = 'block';
+            document.getElementById('delete').style.display = 'none';
+        }
+    
+        else if (dowhat == 'delete'){
+            document.getElementById('browse').style.display = 'none';
+            document.getElementById('insert').style.display = 'none';
+            document.getElementById('update').style.display = 'none';
+            document.getElementById('delete').style.display = 'block';
+        }
+        else if (dowhat == 'all'){
+            document.getElementById('browse').style.display = 'block';
+            document.getElementById('insert').style.display = 'block';
+            document.getElementById('update').style.display = 'block';
+            document.getElementById('delete').style.display = 'block';
+            document.getElementById('show options').style.display = 'none';
+            document.getElementById('hide options').style.display = 'block';
+        }
+        else { //by default display browse
+            document.getElementById('browse').style.display = 'block';
+            document.getElementById('insert').style.display = 'none';
+            document.getElementById('update').style.display = 'none';
+            document.getElementById('delete').style.display = 'none';
+            document.getElementById('show options').style.display = 'block';
+            document.getElementById('hide options').style.display = 'none';
+        }
+    }
+    function newEvent() { showform('insert'); }
+    function updateEvent(pid) { showform('update'); }
+    function deleteEvent(pid) { showform ('delete'); }
+    function browseEvents() { showform ('browse'); }
+    function showAll() { showform ('all'); }
+</script>
+</head>
+
+<body onload="browseEvents()">
+<h1>Events Page</h1>
+<h2>Add, update, or delete an Event</h2>
+
+[ <a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
+
+<div id="browse">
+<p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> <a href="#" onClick="browseEvents()" id="hide options"> Click to remove options</a> </p>
+<table border="1" cellpadding="5">
+  <thead>
+    <tr>
+        <th><a href="#" onClick="newOrganizer()">Add Organizer</a></th>
+        <th></th>
+        <th>Event ID</th>
+        <th>Event Name</th>
+        <th>Event Date</th>
+        <th>Event Type</th>
+        <th>Organizer ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+    <tr>
+        <td><a href="#" onClick="updateOrganizer('this.organizerID')">Edit</a></td>
+        <td><a href="#" onclick="deleteOrganizer('this.organizerID')">Delete</a></td>
+        <td>{{this.eventID}}</td>
+        <td>{{this.eventName}}</td>
+        <td>{{this.eventDate}}</td>
+        <td>{{this.eventType}}</td>
+        <td>{{this.organizerID}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+<p>&nbsp;</p>
+</div> <!-- browse -->
+<div id="insert">
+    <form method="POST" id="addEvent">
+        <legend><strong>Add Event</strong></legend>
+          <fieldset class="fields">
+            <label> Event Name </label> <input type="text" name="eventname">
+            <label> Event Date </label> <input type="text" name="eventdate">
+            <label> Event Type </label> <select name="eventtype">
+            	<option value="0">&nbsp;</option>
+                <option value="1">Concert</option>
+                <option value="2">Stand Up</option>
+                <option value="3">Conference</option>
+                </select>
+            <label> Percent Full </label> <input type="text" name="percentfull">
+            <label> Organizer ID </label> <input type="number" name="organizerid">
+      </fieldset>
+          <input class="btn" type="submit" id="addEvent" value="Add Event">
+          <input class="btn" type="button" value="Cancel" onClick="browseEvents()">
+	</form> 
+</div><!-- insert -->
+<p>&nbsp;</p>
+<div id="update">
+  <br>
+    <form method="POST" id="UpdateEvent">
+        <legend><strong>Update Event</strong></legend>
+          <fieldset class="fields">
+          <input type="hidden" name="eventID" id="updateeventID" value="1">
+          <label> ID: </label> 1
+            <label> Event Name </label> <input type="text" name="eventname" value="Fairchella">
+            <label> Event Date </label> <input type="text" name="eventdate" value="02/01/2025">
+            <label> Event Type </label> <select name="eventtype">
+            	<option value="0">&nbsp;</option>
+                <option value="1" selected>Concert</option>
+                <option value="2">Stand Up</option>
+                <option value="3">Confernce</option>
+                </select>
+            <label> Percent Full </label> <input type="text" name="percentfull" value="85">
+            <label> Organizer ID </label> <input type="number" name="organizerid" value="2">
+      </fieldset>
+          <input class="btn" type="submit" id="UpdateSaveEvent" value="Save Update Event">
+          <input class="btn" type="button" value="cancel" onClick="browseEvents()">
+	  </form> 
+</div><!-- update -->
+<p>&nbsp;</p>
+<div id="delete" style="display: block">
+  <form method="POST" id="deleteEvent">
+      <legend><strong>Delete Event</strong></legend>
+          <fieldset class="fields">
+          <p>Are you sure you wish to delete the following?</p>
+          <input type="hidden" name="eventID" id="deleteeventID" value="1">
+          <label><strong>ID:</strong></label> 1
+          <br>
+          <label> <strong> Event Name: </strong> </label> Fairchella
+            
+    </fieldset>
+    <input class="btn" type="submit" id="DeleteEvent" value="Delete Event">
+    <input class="btn" type="button" value="cancel" onClick="browseEvents()">
+  </form> 
+</div><!-- delete -->
