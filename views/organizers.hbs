@@ -1,60 +1,49 @@
 <script language="JavaScript">
-    function showform(dowhat) {
-        /*
-        * four DIVS: browse, insert, update, delete
-        * this function sets one visible the others not
-        */
-        if (dowhat == 'insert'){
-            document.getElementById('browse').style.display = 'none';
-            document.getElementById('insert').style.display = 'block';
-            document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'none';
-        }
-        else if (dowhat == 'update'){
-            document.getElementById('browse').style.display = 'none';
-            document.getElementById('insert').style.display = 'none';
-            document.getElementById('update').style.display = 'block';
-            document.getElementById('delete').style.display = 'none';
-        }
-        else if (dowhat == 'delete'){
-            document.getElementById('browse').style.display = 'none';
-            document.getElementById('insert').style.display = 'none';
-            document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'block';
-        }
-        else if (dowhat == 'all'){
-            document.getElementById('browse').style.display = 'block';
-            document.getElementById('insert').style.display = 'block';
-            document.getElementById('update').style.display = 'block';
-            document.getElementById('delete').style.display = 'block';
-            document.getElementById('show options').style.display = 'none';
-            document.getElementById('hide options').style.display = 'block';
-        }
-        else { //by default display browse
-            document.getElementById('browse').style.display = 'block';
-            document.getElementById('insert').style.display = 'none';
-            document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'none';
-            document.getElementById('show options').style.display = 'block';
-            document.getElementById('hide options').style.display = 'none';
-        }
+  function showform(dowhat) {
+      /*
+      * four DIVS: browse, insert, update, delete
+      * this function sets one visible the others not
+      */
+    if (dowhat == 'insert'){
+      document.getElementById('browse').style.display = 'none';
+      document.getElementById('insert').style.display = 'block';
+      document.getElementById('update').style.display = 'none';
     }
-    function newOrganizer() { showform('insert'); }
-    function updateOrganizer(pid) { showform('update'); }
-    function browseOrganizers() { showform ('browse'); }
-    function showAll() { showform ('all'); }
+    else if (dowhat == 'update'){
+      document.getElementById('browse').style.display = 'none';
+      document.getElementById('insert').style.display = 'none';
+      document.getElementById('update').style.display = 'block';
+    }
+    else if (dowhat == 'all'){
+      document.getElementById('browse').style.display = 'block';
+      document.getElementById('insert').style.display = 'block';
+      document.getElementById('update').style.display = 'block';
+      document.getElementById('show options').style.display = 'none';
+      document.getElementById('hide options').style.display = 'block';
+    }
+    else { //by default display browse
+      document.getElementById('browse').style.display = 'block';
+      document.getElementById('insert').style.display = 'none';
+      document.getElementById('update').style.display = 'none';
+      document.getElementById('show options').style.display = 'block';
+      document.getElementById('hide options').style.display = 'none';
+    }
+  }
+  function newOrganizer() { showform('insert'); }
+  function updateOrganizer(pid) { showform('update'); }
+  function browseOrganizers() { showform ('browse'); }
+  function showAll() { showform ('all'); }
 </script>
-<script src="./js/deleteOrganizer.js"></script>
+
 
 <body onload="browseOrganizers()">
 <h1>Organizers Page</h1>
 <h2>Add, update, or delete our list of Organizers</h2>
 
-[ <a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
-
-<div id="browse">
-  <p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
+[<a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
+<p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
     <a href="#" onClick="browseOrganizers()" id="hide options"> Click to remove options</a> </p>
+<div id="browse">
 <table border="1" cellpadding="5" id="organizer-table">
   <thead>
     <tr>
@@ -70,8 +59,8 @@
   <tbody>
     {{#each data}}
     <tr data-value="{{this.organizerID}}">
-        <td><a href="#" onClick="updateOrganizer({{this.organizerID}})">Edit</a></td>
-        <td><button onclick='deleteOrganizer({{this.organizerID}})'>Delete</button></td>
+        <td><a href="#" onclick="updateOrganizer({{this.organizerID}})">Edit</a></td>
+        <td><button onclick="deleteOrganizer({{this.organizerID}})">Delete</button></td>
         <td>{{this.organizerID}}</td>
         <td>{{this.firstName}}</td>
         <td>{{this.lastName}}</td>
@@ -81,7 +70,7 @@
     {{/each}}
   </tbody>
 </table>
-
+<script type="text/javascript" src="./js/deleteOrganizer.js" defer></script>
 <p>&nbsp;</p>
 </div> <!-- browse -->
 <div id="insert">

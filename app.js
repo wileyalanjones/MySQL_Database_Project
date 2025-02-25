@@ -69,7 +69,7 @@ app.post('/addOrganizer', function(req, res) {
 
 })
 
-app.delete('/delete-person', (req, res, next) => {
+app.delete('/delete-organizer', (req, res, next) => {
     let data = req.body
     let id = parseInt(data.id)
     let deleteOrg = `DELETE FROM Organizers WHERE organizerID = ?`
@@ -80,7 +80,7 @@ app.delete('/delete-person', (req, res, next) => {
             res.sendStatus(400)
         }
         else {
-            redirect('/organizers')
+            res.sendStatus(204)
         }
     })
 })

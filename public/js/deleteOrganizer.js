@@ -1,35 +1,24 @@
 function deleteOrganizer(organizerID) {
-    // Put our data we want to send in a javascript object
+    let link = '/delete-organizer/';
     let data = {
-        id: personID
+      id: organizerID
     };
-
-    // Setup our AJAX request
-    var xhttp = new XMLHttpRequest();
-    xhttp.open("DELETE", "/delete-organizer", true);
-    xhttp.setRequestHeader("Content-type", "application/json");
-
-    // Tell our AJAX request how to resolve
-    xhttp.onreadystatechange = () => {
-        if (xhttp.readyState == 4 && xhttp.status == 204) {
-
-            // Add the new data to the table
-            deleteRow(organizerID);
-
-        }
-        else if (xhttp.readyState == 4 && xhttp.status != 204) {
-            console.log("There was an error with the input.")
-        }
-    }
-    // Send the request and wait for the response
-    xhttp.send(JSON.stringify(data));
-}
-
+  
+    $.ajax({
+      url: link,
+      type: 'DELETE',
+      data: JSON.stringify(data),
+      contentType: "application/json; charset=utf-8",
+      success: function(result) {
+        deleteRow(organizerID);
+      }
+    });
+  }
 
 function deleteRow(organizerID){
     let table = document.getElementById("organizer-table");
     for (let i = 0, row; row =table.rows[i]; i++) {
-        if (table.rows[i].getAttribute('data-value') === organizerID) {
+        if (table.rows[i].getAttribute('data-value') == organizerID) {
             table.deleteRow(i);
             break; 
         }
