@@ -71,7 +71,7 @@ app.post('/addOrganizer', function(req, res) {
 
 app.delete('/delete-organizer', (req, res, next) => {
     let data = req.body
-    let id = parseInt(data.id)
+    let id = parseInt(data.id);
     let deleteOrg = `DELETE FROM Organizers WHERE organizerID = ?`
 
     db.pool.query(deleteOrg, [id], (error, rows, fields) => {

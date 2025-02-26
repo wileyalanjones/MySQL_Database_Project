@@ -11,7 +11,12 @@ function deleteOrganizer(organizerID) {
       contentType: "application/json; charset=utf-8",
       success: function(result) {
         deleteRow(organizerID);
-      }
+      },
+      //Error message to help test
+      error: function(xhr, status, error) {
+        alert('Error: Could not delete organizer. Please try again later.');
+        console.log(error);
+    }
     });
   }
 
