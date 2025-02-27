@@ -8,7 +8,7 @@ var express = require('express');   // We are using the express library for the 
 var app     = express();            // We need to instantiate an express object to interact with the server in our code
 app.use(express.json())
 app.use(express.urlencoded({extended: true}))
-app.use(express.static('public'))
+app.use(express.static(__dirname + '/public'))
 PORT        = 8239;                 // Set a port number at the top so it's easy to change in the future
 
 const { engine } = require('express-handlebars');
@@ -81,6 +81,25 @@ app.delete('/delete-organizer', (req, res, next) => {
         }
         else {
             res.sendStatus(204)
+        }
+    })
+})
+
+app.put('/put-organizer', (req, res, next) => {
+    let data    = req.body;
+    let id      = data.fullname;
+    let company = data.company;
+    let email   = data.email;
+
+    let queryUpdateOrganizer = `UPDATE Organizers SET companyName = ?, email = ? WHERE organizerID = ?`
+
+    db.pool.query(queryUpdateOrganizer, [company, email, id], (error, rows, fields) => {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.send(rows)
         }
     })
 })
