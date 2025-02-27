@@ -25,7 +25,19 @@ function deleteRow(organizerID){
     for (let i = 0, row; row =table.rows[i]; i++) {
         if (table.rows[i].getAttribute('data-value') == organizerID) {
             table.deleteRow(i);
+            deleteDropDownMenu(organizerID)
             break; 
         }
     }
+}
+
+function deleteDropDownMenu(organizerID){
+  let selectMenu = document.getElementById("organizer-select-name");
+  for (let i = 0; i < selectMenu.length; i++){
+    if (Number(selectMenu.options[i].value) === Number(organizerID)){
+      selectMenu[i].remove();
+      break;
+    } 
+
+  }
 }
