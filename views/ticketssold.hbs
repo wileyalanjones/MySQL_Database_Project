@@ -133,16 +133,17 @@
           <fieldset>
             <select name="update-fullname-and-concert" id="update-fullname-and-concert">
               <option value="test">Select a TicketBuyerEvent</option>
-              {{#each data}}
-              <option value="{{this.ticketsSoldID}}">{{this.ticketsSoldID}}</option>
+              {{#each updates}}
+              <option value="{{this.ticketsSoldID}}">{{this.firstName}} {{this.lastName}} | {{this.eventName}}</option>
               {{/each}}
             </select>
-            <label><strong>Parking Included: </strong> </label> <select name="parking">
+            <label><strong>Parking Included: </strong> </label> <select name="update-parking", id="update-parking">
               <option value="0" selected>No</option>
-              <option vlaue="1">Yes</option>
+              <option value="1">Yes</option>
               </select>
       </fieldset>
-          <input class="btn" type="submit" id="UpdateSaveTicket" value="Save Update Ticket ">
+          <input class="btn" type="submit">
           <input class="btn" type="button" value="Cancel" onClick="browseTickets()">
 	  </form> 
+<script src="./js/updateTicket.js"></script>
 </div><!-- update -->
