@@ -16,7 +16,6 @@ var exphbs = require('express-handlebars');     // Import express-handlebars
 app.engine('.hbs', engine({extname: ".hbs"}));  // Create an instance of the handlebars engine to process templates
 app.set('view engine', '.hbs');                 // Tell express to use the handlebars engine whenever it encounters a *.hbs file.
 
-
 // Database
 var db = require('./database/db-connector')
 
@@ -53,10 +52,11 @@ app.post('/addOrganizer', function(req, res) {
         lastname: data['input-organizer-lastname'],
         company: data['input-companyname'],
         email: data['input-organizer-email']
-    }
+    };
 
     query1 = `INSERT INTO Organizers (firstName, lastName, companyName, email)
             VALUES ('${organizer.firstname}', '${organizer.lastname}', '${organizer.company}','${organizer.email}')`;
+    
     db.pool.query(query1, function(error, rows, fields) {
         if (error){
             console.log(error)
@@ -114,12 +114,75 @@ app.get('/ticketbuyers', function(req, res)
 
 app.get('/ticketssold', function(req, res)
     {
+        const seats = Array.from({length: 50 }, (_, i) => i + 1);
+        const sections = Array.from({length: 40}, (_,i) => i + 100);
         let query1 = "SELECT * FROM TicketsSold";
+        let query2 = "SELECT * FROM Events";
+        let query3 = "SELECT * FROM TicketBuyers";
+
+
         db.pool.query(query1, function(error, rows, fields){
-            res.render('ticketssold', {data: rows});
+            let tickets = rows;
+
+            db.pool.query(query2, (err, rows, fields) => {
+                let events = rows;
+
+                db.pool.query(query3, (err, rows, fields) => {
+                    let ticketbuyers = rows;
+
+                    return res.render('ticketssold', {
+                        data: tickets, 
+                        events: events, 
+                        buyers: ticketbuyers, 
+                        seats: seats, 
+                        sections: sections,
+                        })
+                })
+            })
         })
     })
 
+app.post('/addTicket', (req, res) => {
+    let data = req.body
+
+    const ticket = {
+        eventID: data['input-event-tickets'],
+        ticketBuyerID: data['input-buyer-tickets'],
+        seat: data['input-seat-tickets'],
+        section: data['input-section-tickets'],
+        price: data['input-ticket-price'],
+        parking: data['input-parking']
+    };
+
+    query1 = `INSERT INTO TicketsSold (ticketBuyerID, eventID, price, seat, section, parkingIncluded)
+            VALUES ('${ticket.ticketBuyerID}', '${ticket.eventID}', '${ticket.price}', '${ticket.seat}', '${ticket.section}','${ticket.parking}')`
+    
+    db.pool.query(query1, (error, rows, fields) => {
+        if (error){
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/ticketssold')
+        }
+    })
+})
+
+app.delete('/delete-ticket', (req, res) => {
+    let data = req.body;
+    let id = parseInt(data.id);
+    let deleteTicket = `DELETE FROM TicketsSold WHERE ticketsSoldID = ?`
+
+    db.pool.query(deleteTicket, [id], (error, rows, fields) => {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400)
+        }
+        else {
+            res.sendStatus(204)
+        }
+    })
+})
 /*
     LISTENER
 */
