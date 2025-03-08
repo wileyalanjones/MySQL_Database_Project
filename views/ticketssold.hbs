@@ -8,25 +8,21 @@
             document.getElementById('browse').style.display = 'none';
             document.getElementById('insert').style.display = 'block';
             document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'none';
         }
         else if (dowhat == 'update'){
             document.getElementById('browse').style.display = 'none';
             document.getElementById('insert').style.display = 'none';
             document.getElementById('update').style.display = 'block';
-            document.getElementById('delete').style.display = 'none';
         }
         else if (dowhat == 'delete'){
             document.getElementById('browse').style.display = 'none';
             document.getElementById('insert').style.display = 'none';
             document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'block';
         }
         else if (dowhat == 'all'){
             document.getElementById('browse').style.display = 'block';
             document.getElementById('insert').style.display = 'block';
             document.getElementById('update').style.display = 'block';
-            document.getElementById('delete').style.display = 'block';
             document.getElementById('show options').style.display = 'none';
             document.getElementById('hide options').style.display = 'block';
         }
@@ -34,16 +30,15 @@
             document.getElementById('browse').style.display = 'block';
             document.getElementById('insert').style.display = 'none';
             document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'none';
             document.getElementById('show options').style.display = 'block';
             document.getElementById('hide options').style.display = 'none';
         }
     }
     function newTicket() { showform('insert'); }
     function updateTicket(pid) { showform('update'); }
-    function deleteTicket(pid) { showform ('delete'); }
     function browseTickets() { showform ('browse'); }
-    function showAll() { showform ('all'); }
+    function showAll() { showform ('all'); };
+    
 </script>
 
 <body onload="browseTickets()">
@@ -52,28 +47,25 @@
 
 [ <a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
 
-<div id="browse">
   <p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
     <a href="#" onClick="browseTickets()" id="hide options"> Click to remove options</a> </p>
-<table border="1" cellpadding="5">
+<div id="browse">
+<table border="1" cellpadding="5" id="ticket-table">
   <thead>
     <tr>
-        <th><a href="#" onClick="newOrganizer()">Add Organizer</a></th>
-        <th></th>
         <th>Ticket ID</th>
         <th>Price</th>
-        <th>Secion</th>
+        <th>Section</th>
         <th>Seat</th>
         <th>Parking Included</th>
         <th>Event ID</th>
         <th>Ticket Buyer ID</th>
+        <th></th>
     </tr>
   </thead>
   <tbody>
     {{#each data}}
-    <tr>
-        <td><a href="#" onClick="updateOrganizer('this.organizerID')">Edit</a></td>
-        <td><a href="#" onclick="deleteOrganizer('this.organizerID')">Delete</a></td>
+    <tr data-value="{{this.ticketsSoldID}}">
         <td>{{this.ticketsSoldID}}</td>
         <td>{{this.price}}</td>
         <td>{{this.section}}</td>
@@ -85,73 +77,73 @@
         {{/if}}
         <td>{{this.eventID}}</td>
         <td>{{this.ticketBuyerID}}</td>
+        <td><button onclick="deleteTicket({{this.ticketsSoldID}})">Delete</button></td>
     </tr>
     {{/each}}
   </tbody>
 </table>
+<button onclick="newTicket()">Add Ticket</button>
+<button onclick="updateTicket()">Edit Ticket</button>
+<script type="text/javascript" src="./js/deleteTicket.js" defer></script>
 <p>&nbsp;</p>
 </div> <!-- browse -->
 <div id="insert">
-    <form method="POST" id="addTicket">
+    <form method="POST" id="addTicket" action="/addTicket">
         <legend><strong>Add Ticket </strong></legend>
           <fieldset class="fields">
-            <label> Price </label> <input type="number" name="price">
-            <label> Seat </label> <input type="number" name="Seat">
-            <label> Section </label> <select name="section">
-            	<option value="0">&nbsp;</option>
-                <option value="1" selected>100</option>
-                <option value="2">110</option>
-                <option value="3">127</option>
-                </select>
-            <label> Parking Included </label> <select name="parking">
-              <option value="No" selected>No</option>
-              <option vlaue="Yes">Yes</option>
+            <select name="input-buyer-tickets" id="input-buyer-ticket" required>
+              <option value="">Select a Buyer</option>
+              {{#each buyers}}
+              <option value="{{this.ticketBuyerID}}">{{this.firstName}} {{this.lastName}}</option>
+              {{/each}}
+            </select>
+            <select name="input-event-tickets" id="input-event-ticket" required>
+              <option value="">Select an Event</option>
+              {{#each events}}
+              <option value="{{this.eventID}}">{{this.eventName}}</option>
+              {{/each}}
+            </select>
+            <select name="input-seat-tickets" id="input-seat-ticket" required>
+              <option value="">Select a seat</option>
+              {{#each seats}}
+              <option value="{{this}}">{{this}}</option>
+              {{/each}}
+            </select>
+            <select name="input-section-tickets" id="input-section-tickets" required>
+              <option value="">Select a Section</option>
+              {{#each sections}}
+              <option value="{{this}}">{{this}}</option>
+              {{/each}}
+            </select>
+            <label> Price </label> <input type="number" name="input-ticket-price" required>
+            <label> Parking Included </label> <select name="input-parking" id="input-parking" required>
+              <option value="0" selected>No</option>
+              <option value="1">Yes</option>
               </select>
-            <label> Event ID </label> <input type="number" name="eventID">
-            <label> Ticket Buyer ID <input type="number" name="ticketBuyerID">
       </fieldset>
-          <input class="btn" type="submit" id="addTicket" value="Add Ticket ">
+          <input class="btn" type="submit" id="addTicket-button" value="Add Ticket">
           <input class="btn" type="button" value="Cancel" onClick="browseTickets()">
 	</form> 
 </div><!-- insert -->
 <p>&nbsp;</p>
 <div id="update">
   <br>
-    <form method="POST" id="UpdateTicket">
+    <form id="update-ticket-form">
         <legend><strong>Update Ticket</strong></legend>
-          <fieldset class="fields">
-          <input type="hidden" name="ticketID" id="updateTicketID" value="1">
-            <label> <strong> ID: </strong></label> 1
-            <br>
-            <label><strong> Price: </strong></label> 100 <!--Will auto populate with backend-->
-            <br>
-            <label><strong> Seat: </strong></label> 1 <!--Will auto populate with backend-->
-            <br>
-            <label><strong> Section: </strong></label> 100
-            <br>
-            <label><strong>Parking Included: </strong> </label> <select name="parking">
-              <option value="No" selected>No</option>
-              <option vlaue="Yes">Yes</option>
+          <fieldset>
+            <select name="update-fullname-and-concert" id="update-fullname-and-concert">
+              <option value="test">Select a TicketBuyerEvent</option>
+              {{#each updates}}
+              <option value="{{this.ticketsSoldID}}">{{this.firstName}} {{this.lastName}} | {{this.eventName}}</option>
+              {{/each}}
+            </select>
+            <label><strong>Parking Included: </strong> </label> <select name="update-parking", id="update-parking">
+              <option value="0" selected>No</option>
+              <option value="1">Yes</option>
               </select>
       </fieldset>
-          <input class="btn" type="submit" id="UpdateSaveTicket" value="Save Update Ticket ">
+          <input class="btn" type="submit">
           <input class="btn" type="button" value="Cancel" onClick="browseTickets()">
 	  </form> 
+<script src="./js/updateTicket.js"></script>
 </div><!-- update -->
-<p>&nbsp;</p>
-<div id="delete" style="display: block">
-  <form method="POST" id="deleteTicket">
-      <legend><strong>Delete Ticket </strong></legend>
-          <fieldset class="fields">
-          <p>Are you sure you wish to delete the following?</p>
-          <input type="hidden" name="ticketID" id="deleteticketID" value="1">
-          <label><strong>ID:</strong></label> 1
-          <br>
-          <label> <strong> Ticket Prcie: </strong> </label> 100
-          <br> <strong>Section:</strong> 100
-          <br> <strong>Seat:</strong> 1        
-    </fieldset>
-        <input class="btn" type="submit" id="DeleteTicket" value="Delete Ticket ">
-        <input class="btn" type="button" value="Cancel" onClick="browseTickets()">
-  </form> 
-</div><!-- delete -->
