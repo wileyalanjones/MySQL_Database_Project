@@ -127,6 +127,7 @@ app.get('/ticketssold', function(req, res)
         db.pool.query(query1, function(error, rows, fields){
             let tickets = rows;
             
+            
             for (let i = 0; i < tickets.length; i++) {
                 tickets[i]["parkingIncluded"] 
                 ? tickets[i]["parkingIncluded"] = "Yes"
