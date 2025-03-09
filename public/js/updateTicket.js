@@ -17,7 +17,6 @@ updateTicketForm.addEventListener("submit", (e) => {
     let xhttp = new XMLHttpRequest();
     xhttp.open("PUT", "/put-ticket", true);
     xhttp.setRequestHeader("Content-type", "application/json");
-ssssssss
 
     xhttp.onreadystatechange = () => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
