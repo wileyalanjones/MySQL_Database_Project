@@ -41,8 +41,17 @@
         }
     }
     function newEvent() { showform('insert'); }
-    function updateEvent(pid) { showform('update'); }
-    function deleteEvent(pid) { showform ('delete'); }
+    function updateEvent(eventID) {
+    //Populate update form with selected Event data
+    document.getElementById('updateeventID').value = eventID;
+     showform('update'); 
+    }
+
+    function deleteEvent(eventID) { 
+      //Set eventID to delete form and show delete
+      document.getElementById('deleteeventID').value = eventID;
+      showform ('delete'); 
+      }
     function browseEvents() { showform ('browse'); }
     function showAll() { showform ('all'); }
 </script>

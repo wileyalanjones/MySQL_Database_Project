@@ -122,10 +122,17 @@ app.get('/ticketssold', function(req, res)
         let query4 = `SELECT TicketsSold.ticketsSoldID, Events.eventName, TicketBuyers.firstName, TicketBuyers.lastName 
                         FROM TicketsSold
                         JOIN Events on TicketsSold.eventID = Events.eventID
-                        JOIN TicketBuyers on TicketsSold.ticketBuyerID = TicketBuyers.ticketBuyerID;`
+                        JOIN TicketBuyers on TicketsSold.ticketBuyerID = TicketBuyers.ticketBuyerID;`        
 
         db.pool.query(query1, function(error, rows, fields){
             let tickets = rows;
+            
+            
+            for (let i = 0; i < tickets.length; i++) {
+                tickets[i]["parkingIncluded"] 
+                ? tickets[i]["parkingIncluded"] = "Yes"
+                : tickets[i]["parkingIncluded"] = "No"
+            }
             
             
             for (let i = 0; i < tickets.length; i++) {
