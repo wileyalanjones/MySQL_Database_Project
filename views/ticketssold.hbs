@@ -70,11 +70,7 @@
         <td>{{this.price}}</td>
         <td>{{this.section}}</td>
         <td>{{this.seat}}</td>
-        {{#if this.parkingIncluded}}
-            <td>Yes</td>
-        {{else}}
-            <td>No</td>
-        {{/if}}
+        <td>{{this.parkingIncluded}}</td>
         <td>{{this.eventID}}</td>
         <td>{{this.ticketBuyerID}}</td>
         <td><button onclick="deleteTicket({{this.ticketsSoldID}})">Delete</button></td>

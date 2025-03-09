@@ -32,17 +32,23 @@ updateTicketForm.addEventListener("submit", (e) => {
 
 function updateRow(data, id) {
     
-    console.log(id, data)
+    let parkingIncluded = data == "1" ? "Yes" : "No"
 
     let table = document.getElementById("ticket-table");
 
-    for (let i, row; row = table.rows[i]; i++) {
+    for (let i = 0, row; row = table.rows[i]; i++) {
         
         if (table.rows[i].getAttribute("data-value") == id) {
-            
-            let updateRowIndex   = table.getElementsByTagName("tr")[i]
-            let td_parking       = updateRowIndex.getElementByTagName("td")[4];
-            td_parking.innerHTML = data
+
+            let updateRowIndex   = table.getElementsByTagName("tr")[i];   
+            let td_parking       = updateRowIndex.getElementsByTagName("td")[4];
+            if (td_parking) {
+                td_parking.innerHTML = parkingIncluded;
+            }
+            else {
+                console.warn("Parking column not found")
+            }
+            break;
         }
     }
 }
