@@ -119,10 +119,20 @@ app.get('/ticketssold', function(req, res)
         let query1 = "SELECT * FROM TicketsSold";
         let query2 = "SELECT * FROM Events";
         let query3 = "SELECT * FROM TicketBuyers";
-
+        let query4 = `SELECT TicketsSold.ticketsSoldID, Events.eventName, TicketBuyers.firstName, TicketBuyers.lastName 
+                        FROM TicketsSold
+                        JOIN Events on TicketsSold.eventID = Events.eventID
+                        JOIN TicketBuyers on TicketsSold.ticketBuyerID = TicketBuyers.ticketBuyerID;`
 
         db.pool.query(query1, function(error, rows, fields){
             let tickets = rows;
+            
+            
+            for (let i = 0; i < tickets.length; i++) {
+                tickets[i]["parkingIncluded"] 
+                ? tickets[i]["parkingIncluded"] = "Yes"
+                : tickets[i]["parkingIncluded"] = "No"
+            }
 
             db.pool.query(query2, (err, rows, fields) => {
                 let events = rows;
@@ -130,13 +140,18 @@ app.get('/ticketssold', function(req, res)
                 db.pool.query(query3, (err, rows, fields) => {
                     let ticketbuyers = rows;
 
-                    return res.render('ticketssold', {
-                        data: tickets, 
-                        events: events, 
-                        buyers: ticketbuyers, 
-                        seats: seats, 
-                        sections: sections,
-                        })
+                    db.pool.query(query4, (err, rows, fields) => {
+                        let update = rows;
+
+                        return res.render('ticketssold', {
+                            data: tickets, 
+                            events: events, 
+                            buyers: ticketbuyers, 
+                            seats: seats, 
+                            sections: sections,
+                            updates: update
+                            })
+                    })  
                 })
             })
         })
@@ -180,6 +195,24 @@ app.delete('/delete-ticket', (req, res) => {
         }
         else {
             res.sendStatus(204)
+        }
+    })
+})
+
+app.put('/put-ticket', (req, res) => {
+    let data = req.body;
+    let id = data.id
+    let parking = data.parking
+
+    let queryUpdateTicket = `UPDATE TicketsSold SET parkingIncluded = ? WHERE ticketsSoldID = ?`;
+
+    db.pool.query(queryUpdateTicket, [parking, id] , (err, rows, fields) => {
+        if (err) {
+            console.log(err);
+            res.sendStatus(400);
+        }
+        else {
+            res.send(rows)
         }
     })
 })
