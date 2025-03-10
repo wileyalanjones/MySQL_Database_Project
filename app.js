@@ -111,9 +111,9 @@ app.post('/addEvent',function(req, res)  {
 
     const event = {
         eventName: data['input-eventName'],
-        eventDate: data['input-eventdate'],
-        eventType: data['input-eventtype'],
-        organizerID: data['input-organizerid']
+        eventDate: data['input-eventDate'],
+        eventType: data['input-eventType'],
+        organizerID: data['input-organizerID']
     };
 
     query1 = `INSERT INTO Events (eventName, eventDate, eventType,organizerID)
@@ -132,7 +132,7 @@ app.post('/addEvent',function(req, res)  {
 // DELETE an event
 app.delete('/deleteEvent', (req, res, next) => {
     let data = req.body;
-    let eventID = parseInt(data.eventID);
+    let eventID = parseInt(data.id);
 
     let deleteEventQuery = `DELETE FROM Events WHERE eventID = ?`;
 

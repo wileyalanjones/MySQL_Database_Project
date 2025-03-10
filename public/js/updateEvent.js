@@ -3,6 +3,7 @@ let updateEventForm = document.getElementById('update-event-form');
 updateEventForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    let inputEventID = document.getElementById("input-event-id");
     let inputEventName    = document.getElementById("input-event-name");
     let inputEventDate    = document.getElementById("input-event-date");
     let inputEventType    = document.getElementById("input-event-type");
@@ -10,14 +11,16 @@ updateEventForm.addEventListener("submit", (e) => {
 
     console.log(inputEventName, inputEventDate, inputEventType, inputOrganizerID);
 
+    let eventIDValue     = inputEventID.value;
     let eventNameValue    = inputEventName.value;
     let eventDateValue    = inputEventDate.value;
     let eventTypeValue    = inputEventType.value;
     let organizerIDValue  = inputOrganizerID.value;
 
-    console.log(eventNameValue, eventDateValue, eventTypeValue, organizerIDValue);
+    console.log(eventIDValue, eventNameValue, eventDateValue, eventTypeValue, organizerIDValue);
 
     let data = {
+        eventID: eventIDValue,
         eventName: eventNameValue,
         eventDate: eventDateValue,
         eventType: eventTypeValue,
@@ -34,7 +37,7 @@ updateEventForm.addEventListener("submit", (e) => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateEventRow([eventNameValue, eventDateValue, eventTypeValue,  organizerIDValue], data.eventID);
+            updateEventRow([eventNameValue, eventDateValue, eventTypeValue,  organizerIDValue], eventIDValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {

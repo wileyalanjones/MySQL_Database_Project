@@ -1,5 +1,5 @@
 function deleteEvent(eventID) {
-    let link = '/delete-event/';
+    let link = '/deleteEvent/';
     let data = {
       id: eventID
     };
