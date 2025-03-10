@@ -27,6 +27,76 @@ app.get('/', function(req, res)
         res.render('index')
     })
 
+
+app.get('/organizers', function(req, res)
+    {
+        let query1 = "SELECT * FROM Organizers";
+        db.pool.query(query1, function(error, rows, fields){
+            res.render('organizers', {data: rows});
+        })
+    });
+
+app.post('/addOrganizer', function(req, res) {
+    // Collect the incoming data
+    let data = req.body
+    
+    const organizer = {
+        firstname: data['input-organizer-firstname'],
+        lastname: data['input-organizer-lastname'],
+        company: data['input-companyname'],
+        email: data['input-organizer-email']
+    };
+
+    query1 = `INSERT INTO Organizers (firstName, lastName, companyName, email)
+            VALUES ('${organizer.firstname}', '${organizer.lastname}', '${organizer.company}','${organizer.email}')`;
+    
+    db.pool.query(query1, function(error, rows, fields) {
+        if (error){
+            console.log(error)
+            res.sendStatus(400);
+        }
+        else {
+            res.redirect('/organizers')
+        }
+    })        
+
+})
+
+app.delete('/delete-organizer', (req, res, next) => {
+    let data = req.body
+    let id = parseInt(data.id);
+    let deleteOrg = `DELETE FROM Organizers WHERE organizerID = ?`
+
+    db.pool.query(deleteOrg, [id], (error, rows, fields) => {
+        if (error) {
+            console.log(error)
+            res.sendStatus(400)
+        }
+        else {
+            res.sendStatus(204)
+        }
+    })
+})
+
+app.put('/put-organizer', (req, res, next) => {
+    let data    = req.body;
+    let id      = data.fullname;
+    let company = data.company;
+    let email   = data.email;
+
+    let queryUpdateOrganizer = `UPDATE Organizers SET companyName = ?, email = ? WHERE organizerID = ?`
+
+    db.pool.query(queryUpdateOrganizer, [company, email, id], (error, rows, fields) => {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        }
+        else {
+            res.send(rows)
+        }
+    })
+})
+
 app.get('/events', function(req, res)
     {
         let query1 = "SELECT * FROM Events";
@@ -102,75 +172,6 @@ app.put('/updateEvent', (req, res, next) => {
     });
 });
 
-app.get('/organizers', function(req, res)
-    {
-        let query1 = "SELECT * FROM Organizers";
-        db.pool.query(query1, function(error, rows, fields){
-            res.render('organizers', {data: rows});
-        })
-    });
-
-app.post('/addOrganizer', function(req, res) {
-    // Collect the incoming data
-    let data = req.body
-    
-    const organizer = {
-        firstname: data['input-organizer-firstname'],
-        lastname: data['input-organizer-lastname'],
-        company: data['input-companyname'],
-        email: data['input-organizer-email']
-    };
-
-    query1 = `INSERT INTO Organizers (firstName, lastName, companyName, email)
-            VALUES ('${organizer.firstname}', '${organizer.lastname}', '${organizer.company}','${organizer.email}')`;
-    
-    db.pool.query(query1, function(error, rows, fields) {
-        if (error){
-            console.log(error)
-            res.sendStatus(400);
-        }
-        else {
-            res.redirect('/organizers')
-        }
-    })        
-
-})
-
-app.delete('/delete-organizer', (req, res, next) => {
-    let data = req.body
-    let id = parseInt(data.id);
-    let deleteOrg = `DELETE FROM Organizers WHERE organizerID = ?`
-
-    db.pool.query(deleteOrg, [id], (error, rows, fields) => {
-        if (error) {
-            console.log(error)
-            res.sendStatus(400)
-        }
-        else {
-            res.sendStatus(204)
-        }
-    })
-})
-
-app.put('/put-organizer', (req, res, next) => {
-    let data    = req.body;
-    let id      = data.fullname;
-    let company = data.company;
-    let email   = data.email;
-
-    let queryUpdateOrganizer = `UPDATE Organizers SET companyName = ?, email = ? WHERE organizerID = ?`
-
-    db.pool.query(queryUpdateOrganizer, [company, email, id], (error, rows, fields) => {
-        if (error) {
-            console.log(error);
-            res.sendStatus(400);
-        }
-        else {
-            res.send(rows)
-        }
-    })
-})
-
 app.get('/ticketbuyers', function(req, res)
     {
         let query1 = "SELECT * FROM TicketBuyers";
@@ -178,6 +179,66 @@ app.get('/ticketbuyers', function(req, res)
             res.render('ticketbuyers', {data: rows});
         })
     })
+
+//ADD TicketBuyer
+app.post('/addTicketBuyer', (req, res) => {
+    let data = req.body;
+
+    const ticketBuyer = {
+        firstName: data['input-firstname'],
+        lastName: data['input-lastname'],
+        email: data['input-email']
+    };
+
+    let query = `INSERT INTO TicketBuyers (firstName, lastName, email)
+                 VALUES ('${ticketBuyer.firstName}', '${ticketBuyer.lastName}', '${ticketBuyer.email}')`;
+
+    db.pool.query(query, function(error, rows, fields) {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/ticketbuyers');
+        }
+    });
+});
+
+//DELETE TicketBuyer
+app.delete('/deleteTicketBuyer', (req, res) => {
+    let data = req.body;
+    let ticketBuyerID = parseInt(data.ticketBuyerID); 
+
+    let deleteTicketBuyerQuery = `DELETE FROM TicketBuyers WHERE ticketBuyerID = ?`;
+
+    db.pool.query(deleteTicketBuyerQuery, [ticketBuyerID], (error, rows, fields) => {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+    });
+});
+
+//UPDATE ticket buyer
+app.put('/putTicketBuyer', (req, res) => {
+    let data = req.body;
+    let ticketBuyerID = data.ticketBuyerID;
+    let firstName = data.firstName;
+    let lastName = data.lastName;
+    let email = data.email;
+
+    let queryUpdateTicketBuyer = `UPDATE TicketBuyers SET firstName = ?, lastName = ?, email = ? WHERE ticketBuyerID = ?`;
+
+    db.pool.query(queryUpdateTicketBuyer, [firstName, lastName, email, ticketBuyerID], (error, rows, fields) => {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.send(rows);
+        }
+    });
+});
 
 app.get('/ticketssold', function(req, res)
     {

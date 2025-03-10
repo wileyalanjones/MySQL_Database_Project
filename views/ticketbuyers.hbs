@@ -30,7 +30,7 @@
         }
     }
     function newTicketBuyer() { showform('insert'); }
-    function deleteTicketBuyer(pid) { showform ('delete'); }
+    function deleteTicketBuyer(pid,name) { showDeleteForm (pid,name); }
     function browseTicketBuyers() { showform ('browse'); }
     function showAll() { showform ('all'); }
 </script>
@@ -48,7 +48,7 @@
 <table border="1" cellpadding="5">
   <thead>
     <tr>
-        <th><a href="#" onClick="newOrganizer()">Add Organizer</a></th>
+        <th><a href="#" onClick="newTicketBuyer()">Add Ticket Buyer</a></th>
         <th></th>
         <th>Ticket Buyer ID</th>
         <th>First Name</th>
@@ -60,8 +60,8 @@
   <tbody>
     {{#each data}}
     <tr>
-        <td><a href="#" onClick="updateOrganizer('this.organizerID')">Edit</a></td>
-        <td><a href="#" onclick="deleteOrganizer('this.organizerID')">Delete</a></td>
+        <td><a href="#" onClick="updateTicketBuyer({{this.ticketBuyerID}}, '{{this.firstName}}', '{{this.lastName}}', '{{this.email}}', '{{this.address}}')">Edit</a></td>
+        <td><a href="#" onclick="deleteTicketBuyer({{this.ticketBuyerID}}, '{{this.firstName}} {{this.lastName}}')">Delete</a></td>
         <td>{{this.ticketBuyerID}}</td>
         <td>{{this.firstName}}</td>
         <td>{{this.lastName}}</td>
@@ -82,22 +82,42 @@
             <label> Email </label> <input type="email" name="email">
             <label> Address</label> <input type="text" name="address">
       </fieldset>
-          <input class="btn" type="submit" id="addTicketBuyer" value="Add Ticket Buyer">
+          <input class="btn" type="submit" id="addTicketBuyerID" value="Add Ticket Buyer">
           <input class="btn" type="button" value="Cancel" onClick="browseTicketBuyers()">
 	</form> 
 </div><!-- insert -->
+
 <p>&nbsp;</p>
-<div id="delete" style="display: block">
+
+<div id="update" style="display: none;">
+    <form method="POST" id="updateTicketBuyer">
+        <legend><strong>Update Ticket Buyer</strong></legend>
+        <fieldset class="fields">
+            <label> Ticket Buyer ID </label> <input type="text" name="ticketBuyerID" id="updateTicketBuyerID" readonly>
+            <label> First Name </label> <input type="text" name="firstname" id="updateFirstName">
+            <label> Last Name </label> <input type="text" name="lastname" id="updateLastName">
+            <label> Email </label> <input type="email" name="email" id="updateEmail">
+            <label> Address </label> <input type="text" name="address" id="updateAddress">
+        </fieldset>
+        <input class="btn" type="submit" id="updateTicketBuyerBtn" value="Update Ticket Buyer">
+        <input class="btn" type="button" value="Cancel" onClick="browseTicketBuyers()">
+    </form> 
+</div><!-- update -->
+
+<p>&nbsp;</p>
+<div id="delete" style="display: none;">
   <form method="POST" id="deleteTicketBuyer">
       <legend><strong>Delete Ticket Buyer</strong></legend>
           <fieldset class="fields">
           <p>Are you sure you wish to delete the following?</p>
           <input type="hidden" name="ticketBuyerID" id="deleteticketBuyerID" value="1">
-          <label><strong>ID:</strong></label> 1
-          <br>
-          <label> <strong> Ticket Buyer Name: </strong> </label> John Doe            
-    </fieldset>
+          <label><strong>Ticket Buyer ID:</strong></label> <span id="deleteTicketBuyerID"></span><br>
+            <label><strong>Ticket Buyer Name:</strong></label> <span id="deleteName"></span>
+        </fieldset>
         <input class="btn" type="submit" id="DeleteTicketBuyer" value="Delete Ticket Buyer">
         <input class="btn" type="button" value="Cancel" onClick="browseTicketBuyers()">
   </form> 
 </div><!-- delete -->
+
+<script src="/path/to/deleteTicketBuyer.js"></script>
+<script src="/path/to/updateTicketBuyer.js"></script>
