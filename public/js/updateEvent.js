@@ -1,4 +1,4 @@
-let updatePersonForm = document.getElementById('update-event-form');
+let updateEventForm = document.getElementById('update-event-form');
 
 updateEventForm.addEventListener("submit", (e) => {
     e.preventDefault();
