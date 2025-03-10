@@ -113,12 +113,11 @@ app.post('/addEvent',function(req, res)  {
         eventName: data['input-eventName'],
         eventDate: data['input-eventdate'],
         eventType: data['input-eventtype'],
-        percentFull: data['input-percentfull'],
         organizerID: data['input-organizerid']
     };
 
-    query1 = `INSERT INTO Events (eventName, eventDate, eventType, percentFull, organizerID)
-                  VALUES ('${event.eventName}', '${event.eventDate}', '${event.eventType}', '${event.percentFull}', '${event.organizerID}')`;
+    query1 = `INSERT INTO Events (eventName, eventDate, eventType,organizerID)
+                  VALUES ('${event.eventName}', '${event.eventDate}', '${event.eventType}', '${event.organizerID}')`;
 
     db.pool.query(query1, function(error, rows, fields)  {
         if (error) {
@@ -155,14 +154,13 @@ app.put('/updateEvent', (req, res, next) => {
     const eventName = data.eventname;
     const eventDate = data.eventdate;
     const eventType = data.eventtype;
-    const percentFull = data.percentfull;
     const organizerID = data.organizerid;
 
     let queryUpdateEvent = `UPDATE Events 
-                            SET eventName = ?, eventDate = ?, eventType = ?, percentFull = ?, organizerID = ? 
+                            SET eventName = ?, eventDate = ?, eventType = ?,  organizerID = ? 
                             WHERE eventID = ?`;
 
-    db.pool.query(queryUpdateEvent, [eventName, eventDate, eventType, percentFull, organizerID, eventID], (error, rows, fields) => {
+    db.pool.query(queryUpdateEvent, [eventName, eventDate, eventType, organizerID, eventID], (error, rows, fields) => {
         if (error) {
             console.log(error);
             res.sendStatus(400);

@@ -6,24 +6,21 @@ updateEventForm.addEventListener("submit", (e) => {
     let inputEventName    = document.getElementById("input-event-name");
     let inputEventDate    = document.getElementById("input-event-date");
     let inputEventType    = document.getElementById("input-event-type");
-    let inputPercentFull  = document.getElementById("input-event-percentfull");
     let inputOrganizerID  = document.getElementById("input-event-organizerid");
 
-    console.log(inputEventName, inputEventDate, inputEventType, inputPercentFull, inputOrganizerID);
+    console.log(inputEventName, inputEventDate, inputEventType, inputOrganizerID);
 
     let eventNameValue    = inputEventName.value;
     let eventDateValue    = inputEventDate.value;
     let eventTypeValue    = inputEventType.value;
-    let percentFullValue  = inputPercentFull.value;
     let organizerIDValue  = inputOrganizerID.value;
 
-    console.log(eventNameValue, eventDateValue, eventTypeValue, percentFullValue, organizerIDValue);
+    console.log(eventNameValue, eventDateValue, eventTypeValue, organizerIDValue);
 
     let data = {
         eventName: eventNameValue,
         eventDate: eventDateValue,
         eventType: eventTypeValue,
-        percentFull: percentFullValue,
         organizerID: organizerIDValue
     };
 
@@ -37,7 +34,7 @@ updateEventForm.addEventListener("submit", (e) => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateEventRow([eventNameValue, eventDateValue, eventTypeValue, percentFullValue, organizerIDValue], data.eventID);
+            updateEventRow([eventNameValue, eventDateValue, eventTypeValue,  organizerIDValue], data.eventID);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -53,8 +50,7 @@ function updateEventRow(data, eventID) {
     let eventName = data[0];
     let eventDate = data[1];
     let eventType = data[2];
-    let percentFull = data[3];
-    let organizerID = data[4];
+    let organizerID = data[3];
 
     let table = document.getElementById("event-table");
 
@@ -65,13 +61,11 @@ function updateEventRow(data, eventID) {
             let td_eventName   = updateRowIndex.getElementsByTagName("td")[2];
             let td_eventDate   = updateRowIndex.getElementsByTagName("td")[3];
             let td_eventType   = updateRowIndex.getElementsByTagName("td")[4];
-            let td_percentFull = updateRowIndex.getElementsByTagName("td")[5];
-            let td_organizerID = updateRowIndex.getElementsByTagName("td")[6];
+            let td_organizerID = updateRowIndex.getElementsByTagName("td")[5];
 
             td_eventName.innerHTML   = eventName;
             td_eventDate.innerHTML   = eventDate;
             td_eventType.innerHTML   = eventType;
-            td_percentFull.innerHTML = percentFull;
             td_organizerID.innerHTML = organizerID;
         }
     }
