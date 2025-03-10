@@ -36,21 +36,21 @@ app.get('/events', function(req, res)
     });
 
 //Add a new event
-app.post('/addEvent', (req, res) => {
+app.post('/addEvent',function(req, res)  {
     let data = req.body;
 
     const event = {
-        eventName: data['eventname'],
-        eventDate: data['eventdate'],
-        eventType: data['eventtype'],
-        percentFull: data['percentfull'],
-        organizerID: data['organizerid']
+        eventName: data['input-eventName'],
+        eventDate: data['input-eventdate'],
+        eventType: data['input-eventtype'],
+        percentFull: data['input-percentfull'],
+        organizerID: data['input-organizerid']
     };
 
-    let query1 = `INSERT INTO Events (eventName, eventDate, eventType, percentFull, organizerID)
+    query1 = `INSERT INTO Events (eventName, eventDate, eventType, percentFull, organizerID)
                   VALUES ('${event.eventName}', '${event.eventDate}', '${event.eventType}', '${event.percentFull}', '${event.organizerID}')`;
 
-    db.pool.query(query1, (error, rows, fields) => {
+    db.pool.query(query1, function(error, rows, fields)  {
         if (error) {
             console.log(error);
             res.sendStatus(400);
@@ -61,7 +61,7 @@ app.post('/addEvent', (req, res) => {
 });
 
 // DELETE an event
-app.delete('/deleteEvent', (req, res) => {
+app.delete('/deleteEvent', (req, res, next) => {
     let data = req.body;
     let eventID = parseInt(data.eventID);
 
@@ -78,7 +78,7 @@ app.delete('/deleteEvent', (req, res) => {
 });
 
 //UPDATE an event
-app.put('/updateEvent', (req, res) => {
+app.put('/updateEvent', (req, res, next) => {
     let data = req.body;
 
     const eventID = data.eventID;
@@ -88,11 +88,11 @@ app.put('/updateEvent', (req, res) => {
     const percentFull = data.percentfull;
     const organizerID = data.organizerid;
 
-    let updateEventQuery = `UPDATE Events 
+    let queryUpdateEvent = `UPDATE Events 
                             SET eventName = ?, eventDate = ?, eventType = ?, percentFull = ?, organizerID = ? 
                             WHERE eventID = ?`;
 
-    db.pool.query(updateEventQuery, [eventName, eventDate, eventType, percentFull, organizerID, eventID], (error, rows, fields) => {
+    db.pool.query(queryUpdateEvent, [eventName, eventDate, eventType, percentFull, organizerID, eventID], (error, rows, fields) => {
         if (error) {
             console.log(error);
             res.sendStatus(400);
