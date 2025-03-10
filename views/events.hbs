@@ -97,16 +97,16 @@
     <form method="POST" id="addEvent">
         <legend><strong>Add Event</strong></legend>
           <fieldset class="fields">
-            <label for="eventName"> Event Name </label> <input type="text" id="eventID"
-            name="eventName">
-            <label> Event Date </label> <input type="text" name="eventdate">
-            <label> Event Type </label> <select name="eventType">
+            <label for="input-eventName"> Event Name </label> <input type="text" id="input-eventID"
+            name="input-eventName">
+            <label> Event Date </label> <input type="text" name="input-eventDate">
+            <label> Event Type </label> <select name="input-eventType">
             	<option value="0">&nbsp;</option>
                 <option value="1">Concert</option>
                 <option value="2">Stand Up</option>
                 <option value="3">Conference</option>
                 </select>
-            <label> Organizer ID </label> <input type="number" name="organizerID">
+            <label> Organizer ID </label> <input type="number" name="input-organizerID">
       </fieldset>
           <input class="btn" type="submit" id="addEvent" value="Add Event">
           <input class="btn" type="button" value="Cancel" onClick="browseEvents()">

@@ -106,7 +106,7 @@ app.get('/events', function(req, res)
     });
 
 //Add a new event
-app.post('/events',function(req, res)  {
+app.post('/events', function (req, res) {
     let data = req.body;
 
     const event = {
@@ -130,7 +130,7 @@ app.post('/events',function(req, res)  {
 });
 
 // DELETE an event
-app.delete('/deleteEvent', (req, res, next) => {
+app.delete('/delete-event', (req, res, next) => {
     let data = req.body;
     let eventID = parseInt(data.id);
 
@@ -147,14 +147,14 @@ app.delete('/deleteEvent', (req, res, next) => {
 });
 
 //UPDATE an event
-app.put('/updateEvent', (req, res, next) => {
+app.put('/update-event', (req, res, next) => {
     let data = req.body;
 
     const eventID = data.eventID;
-    const eventName = data.eventname;
-    const eventDate = data.eventdate;
-    const eventType = data.eventtype;
-    const organizerID = data.organizerid;
+    const eventName = data.eventName; 
+    const eventDate = data.eventDate;
+    const eventType = data.eventType;
+    const organizerID = data.organizerID;
 
     let queryUpdateEvent = `UPDATE Events 
                             SET eventName = ?, eventDate = ?, eventType = ?,  organizerID = ? 
