@@ -35,6 +35,73 @@ app.get('/events', function(req, res)
         })
     });
 
+//Add a new event
+app.post('/addEvent', (req, res) => {
+    let data = req.body;
+
+    const event = {
+        eventName: data['eventname'],
+        eventDate: data['eventdate'],
+        eventType: data['eventtype'],
+        percentFull: data['percentfull'],
+        organizerID: data['organizerid']
+    };
+
+    let query1 = `INSERT INTO Events (eventName, eventDate, eventType, percentFull, organizerID)
+                  VALUES ('${event.eventName}', '${event.eventDate}', '${event.eventType}', '${event.percentFull}', '${event.organizerID}')`;
+
+    db.pool.query(query1, (error, rows, fields) => {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/events'); 
+        }
+    });
+});
+
+// DELETE an event
+app.delete('/deleteEvent', (req, res) => {
+    let data = req.body;
+    let eventID = parseInt(data.eventID);
+
+    let deleteEventQuery = `DELETE FROM Events WHERE eventID = ?`;
+
+    db.pool.query(deleteEventQuery, [eventID], (error, rows, fields) => {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.sendStatus(204);
+        }
+    });
+});
+
+//UPDATE an event
+app.put('/updateEvent', (req, res) => {
+    let data = req.body;
+
+    const eventID = data.eventID;
+    const eventName = data.eventname;
+    const eventDate = data.eventdate;
+    const eventType = data.eventtype;
+    const percentFull = data.percentfull;
+    const organizerID = data.organizerid;
+
+    let updateEventQuery = `UPDATE Events 
+                            SET eventName = ?, eventDate = ?, eventType = ?, percentFull = ?, organizerID = ? 
+                            WHERE eventID = ?`;
+
+    db.pool.query(updateEventQuery, [eventName, eventDate, eventType, percentFull, organizerID, eventID], (error, rows, fields) => {
+        if (error) {
+            console.log(error);
+            res.sendStatus(400);
+        } else {
+            res.redirect('/events')
+        }
+    });
+});
+
 app.get('/organizers', function(req, res)
     {
         let query1 = "SELECT * FROM Organizers";
