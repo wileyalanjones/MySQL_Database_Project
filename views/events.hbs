@@ -47,9 +47,10 @@
      showform('update'); 
     }
 
-    function deleteEvent(eventID) { 
+    function deleteEvent(eventID,eventName) { 
       //Set eventID to delete form and show delete
       document.getElementById('deleteeventID').value = eventID;
+      document.getElementById('deleteEventName').textContent = eventName;
       showform ('delete'); 
       }
     function browseEvents() { showform ('browse'); }
@@ -81,7 +82,7 @@
     {{#each data}}
     <tr>
         <td><a href="#" onClick="updateEvent({{this.eventID}})">Edit</a></td>
-        <td><a href="#" onclick="deleteEvent({{this.eventID}})">Delete</a></td>
+        <td><a href="#" onclick="deleteEvent({{this.eventID}}, '{{this.eventName}}')">Delete</a></td>
         <td>{{this.eventID}}</td>
         <td>{{this.eventName}}</td>
         <td>{{this.eventDate}}</td>
@@ -101,7 +102,7 @@
             name="input-eventName">
             <label> Event Date </label> <input type="text" name="input-eventDate">
             <label> Event Type </label> <select name="input-eventType">
-            	<option value="0">&nbsp;</option>
+            	<option value="">Select Event Type</option>
                 <option value="1">Concert</option>
                 <option value="2">Stand Up</option>
                 <option value="3">Conference</option>
@@ -118,7 +119,7 @@
     <form method="POST" id="UpdateEvent">
         <legend><strong>Update Event</strong></legend>
           <fieldset class="fields">
-          <input type="hidden" name="eventID" id="updatEeventID">
+          <input type="hidden" name="eventID" id="updateeventID">
             <label>Event Name</label>
             <input type="text" name="eventName" id="eventID" required>
             
