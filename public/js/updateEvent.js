@@ -1,6 +1,6 @@
-let updateEventForm = document.getElementById('update-event-form');
+let updatePersonForm = document.getElementById('update-event-form');
 
-updateEventForm.addEventListener("submit", (e) => {
+updatePersonForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
     let inputEventID = document.getElementById("input-event-id");
@@ -25,7 +25,7 @@ updateEventForm.addEventListener("submit", (e) => {
         eventDate: eventDateValue,
         eventType: eventTypeValue,
         organizerID: organizerIDValue
-    };
+    }
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
@@ -37,7 +37,7 @@ updateEventForm.addEventListener("submit", (e) => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateEventRow([eventNameValue, eventDateValue, eventTypeValue,  organizerIDValue], eventIDValue);
+            updateEventRow([eventNameValue, eventDateValue, eventTypeValue], eventIDValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {

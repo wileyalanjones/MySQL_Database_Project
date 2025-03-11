@@ -1,4 +1,4 @@
-<script>
+<script language="JavaScript">
   function showform(dowhat) {
         /*
         * four DIVS: browse, insert, update, delete
@@ -8,26 +8,26 @@
             document.getElementById('browse').style.display = 'none';
             document.getElementById('insert').style.display = 'block';
             document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'none';
+            //document.getElementById('delete').style.display = 'none';
         }
         else if (dowhat == 'update'){
             document.getElementById('browse').style.display = 'none';
             document.getElementById('insert').style.display = 'none';
             document.getElementById('update').style.display = 'block';
-            document.getElementById('delete').style.display = 'none';
+            //document.getElementById('delete').style.display = 'none';
         }
     
-        else if (dowhat == 'delete'){
+        /*else if (dowhat == 'delete'){
             document.getElementById('browse').style.display = 'none';
             document.getElementById('insert').style.display = 'none';
             document.getElementById('update').style.display = 'none';
             document.getElementById('delete').style.display = 'block';
-        }
+        }*/
         else if (dowhat == 'all'){
             document.getElementById('browse').style.display = 'block';
             document.getElementById('insert').style.display = 'block';
             document.getElementById('update').style.display = 'block';
-            document.getElementById('delete').style.display = 'block';
+            //document.getElementById('delete').style.display = 'block';
             document.getElementById('show options').style.display = 'none';
             document.getElementById('hide options').style.display = 'block';
         }
@@ -35,24 +35,13 @@
             document.getElementById('browse').style.display = 'block';
             document.getElementById('insert').style.display = 'none';
             document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'none';
+            //document.getElementById('delete').style.display = 'none';
             document.getElementById('show options').style.display = 'block';
             document.getElementById('hide options').style.display = 'none';
         }
     }
     function newEvent() { showform('insert'); }
-    function updateEvent(eventID) {
-    //Populate update form with selected Event data
-    document.getElementById('updateeventID').value = eventID;
-     showform('update'); 
-    }
-
-    function deleteEvent(eventID,eventName) { 
-      //Set eventID to delete form and show delete
-      document.getElementById('deleteeventID').value = eventID;
-      document.getElementById('deleteEventName').textContent = eventName;
-      showform ('delete'); 
-      }
+    function updateEvent(pid) {showform('update')}
     function browseEvents() { showform ('browse'); }
     function showAll() { showform ('all'); }
 </script>
@@ -62,15 +51,13 @@
 <h1>Events Page</h1>
 <h2>Add, update, or delete an Event</h2>
 
-[ <a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
-
+[<a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
+<p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
+    <a href="#" onClick="browseOrganizers()" id="hide options"> Click to remove options</a> </p>
 <div id="browse">
-<p><a href="#" onClick="showAll()" id="show-options">Click to see all options</a> <a href="#" onClick="browseEvents()" id="hide-options"> Click to remove options</a> </p>
 <table border="1" cellpadding="5">
   <thead>
     <tr>
-        <th><a href="#" onClick="newEvent()">Add Event</a></th>
-        <th></th>
         <th>Event ID</th>
         <th>Event Name</th>
         <th>Event Date</th>
@@ -80,26 +67,27 @@
   </thead>
   <tbody>
     {{#each data}}
-    <tr>
-        <td><a href="#" onClick="updateEvent({{this.eventID}})">Edit</a></td>
-        <td><a href="#" onclick="deleteEvent({{this.eventID}}, '{{this.eventName}}')">Delete</a></td>
+    <tr data-value="{{this.eventID}}">
         <td>{{this.eventID}}</td>
         <td>{{this.eventName}}</td>
         <td>{{this.eventDate}}</td>
         <td>{{this.eventType}}</td>
         <td>{{this.organizerID}}</td>
+        <td><button onclick="deleteEvent({{this.eventID}})">Delete</button></td>
     </tr>
     {{/each}}
   </tbody>
 </table>
+<button onclick="newEvent()">Add Event</button>
+<button onclick="updateEvent()">Edit Event</button>
+<script type="text/javascript" src="./js/deleteEvent.js" defer></script>
 <p>&nbsp;</p>
 </div> <!-- browse -->
 <div id="insert">
-    <form method="POST" id="addEvent">
+    <form method="POST" id="addEvent" action="/addEvent">
         <legend><strong>Add Event</strong></legend>
           <fieldset class="fields">
-            <label for="input-eventName"> Event Name </label> 
-            <input type="text" id="input-eventName" name="input-eventName">
+            <label> Event Name </label> <input type="text" name="input-eventName">
             <label> Event Date </label> <input type="text" name="input-eventDate">
             <label> Event Type </label> <select name="input-eventType">
             	<option value="">Select Event Type</option>
@@ -109,53 +97,36 @@
                 </select>
             <label> Organizer ID </label> <input type="number" name="input-organizerID">
       </fieldset>
-          <input class="btn" type="submit" id="addEvent" value="Add Event">
+          <input class="btn" type="submit" id="addEventID" value="Add Event">
           <input class="btn" type="button" value="Cancel" onClick="browseEvents()">
-	</form> 
+	  </form> 
 </div><!-- insert -->
+
 <p>&nbsp;</p>
-<div id="update">
-  <br>
-    <form method="POST" id="UpdateEvent">
+
+<div id="update" style="display: none;">
+    <form id="update-event-form">
         <legend><strong>Update Event</strong></legend>
-          <fieldset class="fields">
-          <input type="hidden" name="eventID" id="updateeventID">
-            <label>Event Name</label>
-            <input type="text" name="eventName" id="upadteEventName" required>
-            
-            <label>Event Date</label>
-            <input type="text" name="eventDate" id="eventDate" required>
-            
-            <label>Event Type</label>
-            <select name="eventType" id="eventType" required>
-                <option value="0">&nbsp;</option>
+          <fieldset>
+            <label for="input-eventName">Event Name</label>
+            <select name="input-eventName" id="input-event-name">
+                <option value="test">Select an Event</option>
+                {{#each data}}
+                  <option value="{{this.eventID}}"> {{this.eventName}}</option>
+                {{/each}}        
+            </select>
+            <label for="input-eventType">Event Type</label>
+            <select name="input-eventType" id="input-event-type">
+                <option value="0">Select an Event Type</option>
                 <option value="1">Concert</option>
                 <option value="2">Stand Up</option>
                 <option value="3">Conference</option>
             </select>
-            
-            <label>Organizer ID</label>
-            <input type="number" name="organizerid" id="organizerID" required>
-            
+             <label for="input-eventDate">Event Date</label>
+            <input type="date" id="input-event-date" name="input-eventDate">
       </fieldset>
-          <input class="btn" type="submit" id="UpdateSaveEvent" value="Save Update Event">
+          <input class="btn" type="submit" id="updateEventBtn" value="Update Event">
           <input class="btn" type="button" value="Cancel" onClick="browseEvents()">
 	  </form> 
-</div><!-- update -->
-<p>&nbsp;</p>
-<div id="delete" style="display: name;">
-  <form method="POST" id="deleteEvent">
-      <legend><strong>Delete Event</strong></legend>
-          <fieldset class="fields">
-            <p>Are you sure you wish to delete the following?</p>
-            <input type="hidden" name="eventID" id="deleteEventID">
-            <label><strong>Event Name:</strong></label> <span id="deleteEventName"></span>
-        </fieldset>
-        <input class="btn" type="submit" value="Delete Event">
-        <input class="btn" type="button" value="Cancel" onClick="browseEvents()">
-    </form> 
-</div><!-- delete -->
-
-<script type="text/javascript" src="./js/deleteEvent.js" defer></script>
 <script type="text/javascript" src="./js/updateEvent.js" defer></script>
-</body>
+</div>

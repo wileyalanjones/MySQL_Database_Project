@@ -106,7 +106,7 @@ app.get('/events', function(req, res)
     });
 
 //Add a new event
-app.post('/events', function (req, res) {
+app.post('/addEvent', function (req, res) {
     let data = req.body;
 
     const event = {
