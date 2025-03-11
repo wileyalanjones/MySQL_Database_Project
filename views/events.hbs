@@ -1,5 +1,5 @@
-<script language="JavaScript">
-    function showform(dowhat) {
+<script>
+  function showform(dowhat) {
         /*
         * four DIVS: browse, insert, update, delete
         * this function sets one visible the others not
@@ -65,7 +65,7 @@
 [ <a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
 
 <div id="browse">
-<p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> <a href="#" onClick="browseEvents()" id="hide options"> Click to remove options</a> </p>
+<p><a href="#" onClick="showAll()" id="show-options">Click to see all options</a> <a href="#" onClick="browseEvents()" id="hide-options"> Click to remove options</a> </p>
 <table border="1" cellpadding="5">
   <thead>
     <tr>
@@ -98,8 +98,8 @@
     <form method="POST" id="addEvent">
         <legend><strong>Add Event</strong></legend>
           <fieldset class="fields">
-            <label for="input-eventName"> Event Name </label> <input type="text" id="input-eventID"
-            name="input-eventName">
+            <label for="input-eventName"> Event Name </label> 
+            <input type="text" id="input-eventName" name="input-eventName">
             <label> Event Date </label> <input type="text" name="input-eventDate">
             <label> Event Type </label> <select name="input-eventType">
             	<option value="">Select Event Type</option>
@@ -121,7 +121,7 @@
           <fieldset class="fields">
           <input type="hidden" name="eventID" id="updateeventID">
             <label>Event Name</label>
-            <input type="text" name="eventName" id="eventID" required>
+            <input type="text" name="eventName" id="upadteEventName" required>
             
             <label>Event Date</label>
             <input type="text" name="eventDate" id="eventDate" required>
@@ -143,7 +143,7 @@
 	  </form> 
 </div><!-- update -->
 <p>&nbsp;</p>
-<div id="delete" style="display: block">
+<div id="delete" style="display: name;">
   <form method="POST" id="deleteEvent">
       <legend><strong>Delete Event</strong></legend>
           <fieldset class="fields">
