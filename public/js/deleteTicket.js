@@ -25,12 +25,19 @@ function deleteRow(ticketsSoldID){
     for (let i = 0, row; row = table.rows[i]; i++) {
         if (table.rows[i].getAttribute('data-value') == ticketsSoldID) {
             table.deleteRow(i);
-            // deleteDropDownMenu(ticketID)
+            deleteDropDownMenu(ticketsSoldID)
             break;
         }
     }
 }
-//
-//fucntion deleteDropDownMenu(ticketID) {
-//    let selectMenu = document.getElementById()
-// }
+function deleteDropDownMenu(ticketsSoldID){
+    let selectMenu = document.getElementById("update-fullname-and-concert");
+    for (let i = 0; i < selectMenu.length; i++){
+      if (Number(selectMenu.options[i].value) === Number(ticketsSoldID)){
+        selectMenu[i].remove();
+        break;
+      } 
+  
+    }
+  }
+  

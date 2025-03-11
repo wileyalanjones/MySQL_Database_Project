@@ -185,11 +185,12 @@ app.post('/addTicketBuyer', (req, res) => {
     const ticketBuyer = {
         firstName: data['input-firstname'],
         lastName: data['input-lastname'],
-        email: data['input-email']
+        email: data['input-email'],
+        address: data['input-address']
     };
 
-    let query = `INSERT INTO TicketBuyers (firstName, lastName, email)
-                 VALUES ('${ticketBuyer.firstName}', '${ticketBuyer.lastName}', '${ticketBuyer.email}')`;
+    let query = `INSERT INTO TicketBuyers (firstName, lastName, email, address)
+                 VALUES ('${ticketBuyer.firstName}', '${ticketBuyer.lastName}', '${ticketBuyer.email}', '${ticketBuyer.address}')`;
 
     db.pool.query(query, function(error, rows, fields) {
         if (error) {
@@ -202,9 +203,9 @@ app.post('/addTicketBuyer', (req, res) => {
 });
 
 //DELETE TicketBuyer
-app.delete('/deleteTicketBuyer', (req, res) => {
+app.delete('/delete-ticket-buyer', (req, res) => {
     let data = req.body;
-    let ticketBuyerID = parseInt(data.ticketBuyerID); 
+    let ticketBuyerID = parseInt(data.id); 
 
     let deleteTicketBuyerQuery = `DELETE FROM TicketBuyers WHERE ticketBuyerID = ?`;
 
@@ -219,16 +220,15 @@ app.delete('/deleteTicketBuyer', (req, res) => {
 });
 
 //UPDATE ticket buyer
-app.put('/putTicketBuyer', (req, res) => {
+app.put('/put-ticketBuyer', (req, res) => {
     let data = req.body;
     let ticketBuyerID = data.ticketBuyerID;
-    let firstName = data.firstName;
-    let lastName = data.lastName;
     let email = data.email;
+    let address = data.address;
 
-    let queryUpdateTicketBuyer = `UPDATE TicketBuyers SET firstName = ?, lastName = ?, email = ? WHERE ticketBuyerID = ?`;
+    let queryUpdateTicketBuyer = `UPDATE TicketBuyers SET email = ?, address = ? WHERE ticketBuyerID = ?`;
 
-    db.pool.query(queryUpdateTicketBuyer, [firstName, lastName, email, ticketBuyerID], (error, rows, fields) => {
+    db.pool.query(queryUpdateTicketBuyer, [email, address, ticketBuyerID], (error, rows, fields) => {
         if (error) {
             console.log(error);
             res.sendStatus(400);

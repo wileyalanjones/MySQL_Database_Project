@@ -3,7 +3,7 @@ function deleteTicketBuyer(ticketBuyerID) {
     let data = {
       id: ticketBuyerID
     };
-  
+
     $.ajax({
       url: link,
       type: 'DELETE',
@@ -20,19 +20,19 @@ function deleteTicketBuyer(ticketBuyerID) {
     });
   }
 
-function deleteRow(ticketBuyerID){
-    let table = document.getElementById("ticketBuyer-table");
-    for (let i = 0, row; row =table.rows[i]; i++) {
+  function deleteRow(ticketBuyerID){
+    let table = document.getElementById('ticketBuyer-table');
+    for (let i = 0, row; row = table.rows[i]; i++) {
         if (table.rows[i].getAttribute('data-value') == ticketBuyerID) {
             table.deleteRow(i);
-            deleteDropDownMenu(ticketBuyerID);
-            break; 
+            deleteDropDownMenu(ticketBuyerID)
+            break;
         }
     }
 }
 
 function deleteDropDownMenu(ticketBuyerID){
-  let selectMenu = document.getElementById("ticketBuyer-select-name");
+  let selectMenu = document.getElementById("ticket-buyer-select-name");
   for (let i = 0; i < selectMenu.length; i++){
     if (Number(selectMenu.options[i].value) === Number(ticketBuyerID)){
       selectMenu[i].remove();
