@@ -91,9 +91,9 @@
             <label> Event Date </label> <input type="text" name="input-eventDate">
             <label> Event Type </label> <select name="input-eventType">
             	<option value="">Select Event Type</option>
-                <option value="1">Concert</option>
-                <option value="2">Stand Up</option>
-                <option value="3">Conference</option>
+                <option value="Concert">Concert</option>
+                <option value="Stand Up">Stand Up</option>
+                <option value="Conference">Conference</option>
                 </select>
             <label> Organizer ID </label> <input type="number" name="input-organizerID">
       </fieldset>
@@ -116,14 +116,14 @@
                 {{/each}}        
             </select>
             <label for="input-eventType">Event Type</label>
-            <select name="input-eventType" id="input-event-type">
+            <select name="input-eventType" id="input-eventType">
                 <option value="0">Select an Event Type</option>
                 <option value="1">Concert</option>
                 <option value="2">Stand Up</option>
                 <option value="3">Conference</option>
             </select>
              <label for="input-eventDate">Event Date</label>
-            <input type="date" id="input-event-date" name="input-eventDate">
+            <input type="text" id="input-event-date" name="input-eventDate">
       </fieldset>
           <input class="btn" type="submit" id="updateEventBtn" value="Update Event">
           <input class="btn" type="button" value="Cancel" onClick="browseEvents()">
