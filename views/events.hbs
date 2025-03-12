@@ -17,12 +17,13 @@
             //document.getElementById('delete').style.display = 'none';
         }
     
-        /*else if (dowhat == 'delete'){
+        else if (dowhat == 'delete'){
             document.getElementById('browse').style.display = 'none';
             document.getElementById('insert').style.display = 'none';
             document.getElementById('update').style.display = 'none';
-            document.getElementById('delete').style.display = 'block';
-        }*/
+            //document.getElementById('delete').style.display = 'block';
+        }
+
         else if (dowhat == 'all'){
             document.getElementById('browse').style.display = 'block';
             document.getElementById('insert').style.display = 'block';
@@ -53,7 +54,7 @@
 
 [<a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
 <p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
-    <a href="#" onClick="browseOrganizers()" id="hide options"> Click to remove options</a> </p>
+    <a href="#" onClick="browseEvents()" id="hide options"> Click to remove options</a> </p>
 <div id="browse">
 <table border="1" cellpadding="5">
   <thead>
@@ -62,7 +63,7 @@
         <th>Event Name</th>
         <th>Event Date</th>
         <th>Event Type</th>
-        <th>Organizer ID</th>
+
     </tr>
   </thead>
   <tbody>
@@ -72,7 +73,7 @@
         <td>{{this.eventName}}</td>
         <td>{{this.eventDate}}</td>
         <td>{{this.eventType}}</td>
-        <td>{{this.organizerID}}</td>
+
         <td><button onclick="deleteEvent({{this.eventID}})">Delete</button></td>
     </tr>
     {{/each}}
@@ -108,25 +109,19 @@
     <form id="update-event-form">
         <legend><strong>Update Event</strong></legend>
           <fieldset>
-            <label for="input-eventName">Event Name</label>
-            <select name="input-eventName" id="input-event-name">
-                <option value="test">Select an Event</option>
+            <select name="update-event-id-and-name" id="update-event-id-and-name">
+                <option value="test">Select an Event ID-Name</option>
                 {{#each data}}
-                  <option value="{{this.eventID}}"> {{this.eventName}}</option>
+                    <option value="{{this.eventID}}" >{{this.eventID}} - {{this.eventName}}</option>    
                 {{/each}}        
             </select>
-            <label for="input-eventType">Event Type</label>
-            <select name="input-eventType" id="input-eventType">
-                <option value="0">Select an Event Type</option>
-                <option value="1">Concert</option>
-                <option value="2">Stand Up</option>
-                <option value="3">Conference</option>
-            </select>
-             <label for="input-eventDate">Event Date</label>
-            <input type="text" id="input-event-date" name="input-eventDate">
+
+             <label for="update-event-date">Event Date</label>
+            <input type="text" id="update-event-date" name="update-event-date">
+            <input type="hidden" id="input-event-organizerid" name="organizerIDValue" value="{{currentOrganizerID}}">
       </fieldset>
           <input class="btn" type="submit" id="updateEventBtn" value="Update Event">
           <input class="btn" type="button" value="Cancel" onClick="browseEvents()">
 	  </form> 
-<script type="text/javascript" src="./js/updateEvent.js" defer></script>
-</div>
+<script src="./js/updateEvent.js" defer></script>
+</div><!-- update -->

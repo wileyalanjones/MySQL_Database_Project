@@ -3,29 +3,32 @@ let updatePersonForm = document.getElementById('update-event-form');
 updatePersonForm.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    let inputEventID = document.getElementById("input-event-id");
-    let inputEventName    = document.getElementById("input-event-name");
-    let inputEventDate    = document.getElementById("input-event-date");
-    let inputEventType    = document.getElementById("input-event-type");
+    //let inputEventID = document.getElementById("input-event-id");
+    let inputEventIDName = document.getElementById("update-event-id-and-name");
+    let inputEventDate    = document.getElementById("update-event-date");
+    //let inputEventType    = document.getElementById("input-event-type");
     let inputOrganizerID  = document.getElementById("input-event-organizerid");
 
-    console.log(inputEventName, inputEventDate, inputEventType, inputOrganizerID);
+    //console.log(inputEventName, inputEventDate, inputEventType, inputOrganizerID);
 
-    let eventIDValue     = inputEventID.value;
-    let eventNameValue    = inputEventName.value;
+    let eventIDNameValue     = inputEventIDName.value;
+    //let eventNameValue    = inputEventName.value;
     let eventDateValue    = inputEventDate.value;
-    let eventTypeValue    = inputEventType.value;
-    let organizerIDValue  = inputOrganizerID.value;
+    //let eventTypeValue    = inputEventType.value;
+    let organizerIDValue  = inputOrganizerID.value || null;
 
-    console.log(eventIDValue, eventNameValue, eventDateValue, eventTypeValue, organizerIDValue);
+    //let organizerIDValue = inputEventIDName.options[inputEventIDName.selectedIndex].getAttribute('data-organizerid');
+    //inputOrganizerID.value = organizerIDValue;
+    
+    //console.log(eventIDNameValue, eventDateValue, organizerIDValue);
 
     let data = {
-        eventID: eventIDValue,
-        eventName: eventNameValue,
+        eventID: eventIDNameValue,
+        //eventName: eventNameValue,
         eventDate: eventDateValue,
-        eventType: eventTypeValue,
+        //eventType: eventTypeValue,
         organizerID: organizerIDValue
-    }
+    };
 
     // Setup our AJAX request
     var xhttp = new XMLHttpRequest();
@@ -37,7 +40,7 @@ updatePersonForm.addEventListener("submit", (e) => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateEventRow([eventNameValue, eventDateValue, eventTypeValue], eventIDValue);
+            updateEventRow(eventDateValue, eventIDNameValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -50,10 +53,7 @@ updatePersonForm.addEventListener("submit", (e) => {
 });
 
 function updateEventRow(data, eventID) {
-    let eventName = data[0];
-    let eventDate = data[1];
-    let eventType = data[2];
-    let organizerID = data[3];
+    //let eventDate = data[1];
 
     let table = document.getElementById("event-table");
 
@@ -61,15 +61,9 @@ function updateEventRow(data, eventID) {
         if (table.rows[i].getAttribute("data-value") == eventID) {
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
-            let td_eventName   = updateRowIndex.getElementsByTagName("td")[2];
             let td_eventDate   = updateRowIndex.getElementsByTagName("td")[3];
-            let td_eventType   = updateRowIndex.getElementsByTagName("td")[4];
-            let td_organizerID = updateRowIndex.getElementsByTagName("td")[5];
 
-            td_eventName.innerHTML   = eventName;
-            td_eventDate.innerHTML   = eventDate;
-            td_eventType.innerHTML   = eventType;
-            td_organizerID.innerHTML = organizerID;
+            td_eventDate.innerHTML = eventDate;
         }
     }
 }

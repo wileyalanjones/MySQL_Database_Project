@@ -150,17 +150,24 @@ app.delete('/delete-event', (req, res, next) => {
 app.put('/update-event', (req, res, next) => {
     let data = req.body;
 
-    const eventID = data.eventID;
-    const eventName = data.eventName; 
+
+    //const eventIDNameValue = data.eventIDNameValue;
+    const eventID = data.eventID; 
+    //const eventName = data.eventName; 
     const eventDate = data.eventDate;
-    const eventType = data.eventType;
-    const organizerID = data.organizerID;
+    //const eventType = data.eventType;
+    let organizerID = data.organizerID;
+
+    //organizerID to NULL
+    if (!organizerID || organizerID.trim() === "") {
+        organizerID = null;
+    }
 
     let queryUpdateEvent = `UPDATE Events 
-                            SET eventName = ?, eventDate = ?, eventType = ?,  organizerID = ? 
+                            SET eventDate = ?,organizerID = ? 
                             WHERE eventID = ?`;
 
-    db.pool.query(queryUpdateEvent, [eventName, eventDate, eventType, organizerID, eventID], (error, rows, fields) => {
+    db.pool.query(queryUpdateEvent, [eventDate, organizerID, eventID], (error, rows, fields) => {
         if (error) {
             console.log(error);
             res.sendStatus(400);
