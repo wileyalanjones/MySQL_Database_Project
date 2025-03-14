@@ -1,3 +1,10 @@
+/**{{!
+  🔔 Citation for the following code:
+  ---- Date: 3/10/2025
+  ---- Adapted from Node.js Exploration: https://canvas.oregonstate.edu/courses/1987790/pages/exploration-developing-in-node-dot-js?module_item_id=25023025
+  ---- Adapted from nodejs-starter-app: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+  }}*/
+
 let updatePersonForm = document.getElementById('update-ticket-buyer');
 
 updatePersonForm.addEventListener("submit", (e) => {
@@ -7,13 +14,9 @@ updatePersonForm.addEventListener("submit", (e) => {
     let inputEmail          = document.getElementById("update-email");
     let inputAddress        = document.getElementById("update-address");
 
-    console.log(inputEmail)
-
     let ticketBuyerIDValue  = inputTicketBuyerID.value;
     let emailValue          = inputEmail.value;
     let addressValue        = inputAddress.value;
-
-    console.log(ticketBuyerIDValue, emailValue, addressValue);
 
     let data = {
         ticketBuyerID: ticketBuyerIDValue,

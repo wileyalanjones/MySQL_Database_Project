@@ -1,3 +1,10 @@
+{{!
+  🔔 Citation for the following code:
+  ---- Date: 3/10/2025
+  ---- Adapted from Node.js Exploration: https://canvas.oregonstate.edu/courses/1987790/pages/exploration-developing-in-node-dot-js?module_item_id=25023025
+  ---- Adapted from nodejs-starter-app: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+  }}
+
 <script language="JavaScript">
   function showform(dowhat) {
         /*
@@ -49,12 +56,24 @@
 </head>
 
 <body onload="browseEvents()">
+
+{{!
+🔔 Citation for the following code:
+---- Date: 3/14/2025
+---- Adapted from W3School: https://www.w3schools.com/howto/howto_js_topnav.asp
+}}
+<div class="topnav"> 
+  <a href="/">Home Page</a>
+  <a href="events">Events</a>
+  <a href="organizers">Organizers</a>
+  <a href="ticketbuyers">Ticket Buyers</a>
+  <a href="ticketssold">Tickets</a>
+</div> 
 <h1>Events Page</h1>
 <h2>Add, update, or delete an Event</h2>
 
-[<a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
-<p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
-    <a href="#" onClick="browseEvents()" id="hide options"> Click to remove options</a> </p>
+<button href="#" onClick="showAll()" id="show options"> All options </button> 
+<button href="#" onClick="browseEvents()" id="hide options"> Remove options </button>
 <div id="browse">
 <table border="1" cellpadding="5" id="event-table">
   <thead>
@@ -90,15 +109,21 @@
     <form method="POST" id="addEvent" action="/addEvent">
         <legend><strong>Add Event</strong></legend>
           <fieldset class="fields">
-            <label> Event Name </label> <input type="text" name="input-eventName">
-            <label> Event Date </label> <input type="date" name="input-eventDate">
-            <label> Event Type </label> <select name="input-eventType">
+            <label> Event Name: </label> <input type="text" name="input-eventName">
+            <label> Event Date: </label> <input type="date" name="input-eventDate">
+            <label> Event Type: </label> <select name="input-eventType">
             	<option value="">Select Event Type</option>
                 <option value="Concert">Concert</option>
                 <option value="Stand Up">Stand Up</option>
                 <option value="Conference">Conference</option>
                 </select>
-            <label> Organizer ID </label> <input type="number" name="input-organizerID" id="input-event-organizerID">
+            <label for="input-organizerID"> Organizer: </label> 
+            <select name="input-organizerID" id="input-event-organizerID">
+              <option value="">None</option>
+              {{#each organizers}}
+                <option value="{{this.organizerID}}">{{this.firstName}} {{this.lastName}}</option>
+              {{/each}}
+            </select>
       </fieldset>
           <input class="btn" type="submit" id="addEventID" value="Add Event">
           <input class="btn" type="button" value="Cancel" onClick="browseEvents()">
@@ -107,20 +132,21 @@
 
 <p>&nbsp;</p>
 
-<div id="update" style="display: none;">
+<div id="update" style="display: block;">
     <form id="update-event-form">
         <legend><strong>Update Event</strong></legend>
           <fieldset>
+            <label for="update-event-id-and-name"> Event Name: </label>
             <select name="update-event-id-and-name" id="update-event-id-and-name">
-                <option value="test">Select an Event ID-Name</option>
+                <option value="test">Select an Event Name</option>
                 {{#each data}}
-                    <option value="{{this.eventID}}" >{{this.eventID}} - {{this.eventName}}</option>    
+                    <option value="{{this.eventID}}" >{{this.eventName}}</option>    
                 {{/each}}        
             </select>
 
-             <label for="update-event-date">Event Date</label>
+            <label for="update-event-date">Event Date:</label>
             <input type="date" id="update-event-date" name="update-event-date">
-            <label for="organizerIDValue"> Select an Organizer</label>
+            <label for="organizerIDValue"> Select an Organizer: </label>
             <select id="input-event-organizerid" name="organizerIDValue">
               <option value="">None</option>
               {{#each organizers}}

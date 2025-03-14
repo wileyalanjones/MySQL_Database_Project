@@ -1,3 +1,10 @@
+{{!
+  🔔 Citation for the following code:
+  ---- Date: 3/10/2025
+  ---- Adapted from Node.js Exploration: https://canvas.oregonstate.edu/courses/1987790/pages/exploration-developing-in-node-dot-js?module_item_id=25023025
+  ---- Adapted from nodejs-starter-app: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+  }}
+
 <script language="JavaScript">
   function showform(dowhat) {
       /*
@@ -37,12 +44,26 @@
 
 
 <body onload="browseOrganizers()">
+
+{{!
+🔔 Citation for the following code:
+---- Date: 3/14/2025
+---- Adapted from W3School: https://www.w3schools.com/howto/howto_js_topnav.asp
+}}
+<div class="topnav"> 
+  <a href="/">Home Page</a>
+  <a href="events">Events</a>
+  <a href="organizers">Organizers</a>
+  <a href="ticketbuyers">Ticket Buyers</a>
+  <a href="ticketssold">Tickets</a>
+</div> 
+
 <h1>Organizers Page</h1>
 <h2>Add, update, or delete our list of Organizers</h2>
 
-[<a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
-<p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
-    <a href="#" onClick="browseOrganizers()" id="hide options"> Click to remove options</a> </p>
+<button href="#" onClick="showAll()" id="show options"> All options </button> 
+<button href="#" onClick="browseEvents()" id="hide options"> Remove options </button>
+
 <div id="browse">
 <table border="1" cellpadding="5" id="organizer-table">
   <thead>
@@ -93,14 +114,14 @@
     <form id="update-organizer-form">
     <legend><strong>Update Organizer</strong></legend>
       <fieldset>
-        <label for="input-fullname">Full name: </label>
+        <label for="input-fullname"> Full name: </label>
         <select name="input-fullname" id="organizer-select-name">
           <option value="test">Select an Organizer</option>
           {{#each data}}
             <option value="{{this.organizerID}}">{{this.firstName}} {{this.lastName}}</option>
           {{/each}}
         </select>
-        <label>Company: </label><input name="input-company" id="input-company-update" required>
+        <label>Company: </label><input type="text" name="input-company" id="input-company-update" required>
         <label>Email: </label><input type="email" name="update-email" id="update-email" required>
       </fieldset>
     <input class="btn" type="submit">

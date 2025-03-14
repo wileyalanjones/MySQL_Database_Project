@@ -1,3 +1,10 @@
+{{!
+  🔔 Citation for the following code:
+  ---- Date: 3/10/2025
+  ---- Adapted from Node.js Exploration: https://canvas.oregonstate.edu/courses/1987790/pages/exploration-developing-in-node-dot-js?module_item_id=25023025
+  ---- Adapted from nodejs-starter-app: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+  }}
+
 <script language="JavaScript">
     function showform(dowhat) {
         /*
@@ -42,13 +49,25 @@
 </script>
 
 <body onload="browseTickets()">
+{{!
+🔔 Citation for the following code:
+---- Date: 3/14/2025
+---- Adapted from W3School: https://www.w3schools.com/howto/howto_js_topnav.asp
+}}
+<div class="topnav"> 
+  <a href="/">Home Page</a>
+  <a href="events">Events</a>
+  <a href="organizers">Organizers</a>
+  <a href="ticketbuyers">Ticket Buyers</a>
+  <a href="ticketssold">Tickets</a>
+</div> 
+
 <h1>Tickets Page</h1>
 <h2>Add, update, or delete our list of Tickets</h2>
 
-[ <a href="/">Home Page</a> | <a href="events">Events</a> | <a href="organizers">Organizers</a> | <a href="ticketbuyers">Ticket Buyers</a> | <a href="ticketssold">Tickets</a>]
+<button href="#" onClick="showAll()" id="show options"> All options </button> 
+<button href="#" onClick="browseEvents()" id="hide options"> Remove options </button>
 
-  <p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
-    <a href="#" onClick="browseTickets()" id="hide options"> Click to remove options</a> </p>
 <div id="browse">
 <table border="1" cellpadding="5" id="ticket-table">
   <thead>
@@ -87,32 +106,36 @@
     <form method="POST" id="addTicket" action="/addTicket">
         <legend><strong>Add Ticket </strong></legend>
           <fieldset class="fields">
+            <label for="input-buyer-tickets">Ticket Buyer:</label>
             <select name="input-buyer-tickets" id="input-buyer-ticket" required>
               <option value="">Select a Buyer</option>
               {{#each buyers}}
               <option value="{{this.ticketBuyerID}}">{{this.firstName}} {{this.lastName}}</option>
               {{/each}}
             </select>
+            <label for="input-event-tickets">Event:</label>
             <select name="input-event-tickets" id="input-event-ticket" required>
               <option value="">Select an Event</option>
               {{#each events}}
               <option value="{{this.eventID}}">{{this.eventName}}</option>
               {{/each}}
             </select>
+            <label for="input-seat-tickets">Seat:</label>
             <select name="input-seat-tickets" id="input-seat-ticket" required>
               <option value="">Select a seat</option>
               {{#each seats}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}
             </select>
+            <label for="input-section-tickets">Section: </label>
             <select name="input-section-tickets" id="input-section-tickets" required>
               <option value="">Select a Section</option>
               {{#each sections}}
               <option value="{{this}}">{{this}}</option>
               {{/each}}
             </select>
-            <label> Price </label> <input type="number" name="input-ticket-price" required>
-            <label> Parking Included </label> <select name="input-parking" id="input-parking" required>
+            <label> Price: </label> <input type="number" name="input-ticket-price" required>
+            <label> Parking Included: </label> <select name="input-parking" id="input-parking" required>
               <option value="0" selected>No</option>
               <option value="1">Yes</option>
               </select>
@@ -128,6 +151,7 @@
     <form id="update-ticket-form">
         <legend><strong>Update Ticket</strong></legend>
           <fieldset>
+            <label for="update-fullname-and-concert">Ticket Buyer and Event:</label>
             <select name="update-fullname-and-concert" id="update-fullname-and-concert">
               <option value="test">Select a TicketBuyer Event</option>
               {{#each updates}}

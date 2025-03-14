@@ -1,3 +1,10 @@
+/**{{!
+  🔔 Citation for the following code:
+  ---- Date: 3/10/2025
+  ---- Adapted from Node.js Exploration: https://canvas.oregonstate.edu/courses/1987790/pages/exploration-developing-in-node-dot-js?module_item_id=25023025
+  ---- Adapted from nodejs-starter-app: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+  }}*/
+
 let updatePersonForm = document.getElementById('update-organizer-form');
 
 updatePersonForm.addEventListener("submit", (e) => {
