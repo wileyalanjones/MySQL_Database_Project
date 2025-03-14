@@ -129,9 +129,9 @@
         <legend><strong>Update Ticket</strong></legend>
           <fieldset>
             <select name="update-fullname-and-concert" id="update-fullname-and-concert">
-              <option value="test">Select a TicketBuyerEvent</option>
+              <option value="test">Select a TicketBuyer Event</option>
               {{#each updates}}
-              <option value="{{this.ticketsSoldID}}">{{this.firstName}} {{this.lastName}} | {{this.eventName}}</option>
+              <option value="{{this.ticketsSoldID}}">{{this.ticketsSoldID}} | {{this.firstName}} {{this.lastName}} | {{this.eventName}} </option>
               {{/each}}
             </select>
             <label><strong>Parking Included: </strong> </label> <select name="update-parking", id="update-parking">
