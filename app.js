@@ -100,8 +100,23 @@ app.put('/put-organizer', (req, res, next) => {
 app.get('/events', function(req, res)
     {
         let query1 = "SELECT * FROM Events";
+        let query2 = "SELECT * FROM Organizers"
+
         db.pool.query(query1, function(error, rows, fields){
-            res.render('events', {data: rows});
+            
+            let data = rows
+
+            for (let i = 0; i < data.length; i++) {
+                date_to_string = JSON.stringify(data[i].eventDate)
+                formatted_date = date_to_string.slice(1, 11) 
+                data[i].eventDate = formatted_date
+            }
+            
+            db.pool.query(query2, (errors, rows, fields) => {
+                let organizers = rows 
+                return res.render('events', {data: data, organizers: organizers})
+            })
+
         })
     });
 
@@ -116,7 +131,7 @@ app.post('/addEvent', function (req, res) {
         organizerID: data['input-organizerID']
     };
 
-    query1 = `INSERT INTO Events (eventName, eventDate, eventType,organizerID)
+    query1 = `INSERT INTO Events (eventName, eventDate, eventType, organizerID)
                   VALUES ('${event.eventName}', '${event.eventDate}', '${event.eventType}', '${event.organizerID}')`;
 
     db.pool.query(query1, function(error, rows, fields)  {
@@ -150,7 +165,6 @@ app.delete('/delete-event', (req, res, next) => {
 app.put('/update-event', (req, res, next) => {
     let data = req.body;
 
-
     //const eventIDNameValue = data.eventIDNameValue;
     const eventID = data.eventID; 
     //const eventName = data.eventName; 
@@ -172,7 +186,7 @@ app.put('/update-event', (req, res, next) => {
             console.log(error);
             res.sendStatus(400);
         } else {
-            res.redirect('/events')
+            res.send(rows);
         }
     });
 });
@@ -259,14 +273,6 @@ app.get('/ticketssold', function(req, res)
 
         db.pool.query(query1, function(error, rows, fields){
             let tickets = rows;
-            
-            
-            for (let i = 0; i < tickets.length; i++) {
-                tickets[i]["parkingIncluded"] 
-                ? tickets[i]["parkingIncluded"] = "Yes"
-                : tickets[i]["parkingIncluded"] = "No"
-            }
-            
             
             for (let i = 0; i < tickets.length; i++) {
                 tickets[i]["parkingIncluded"] 

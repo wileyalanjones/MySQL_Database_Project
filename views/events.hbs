@@ -56,13 +56,15 @@
 <p><a href="#" onClick="showAll()" id="show options">Click to see all options</a> 
     <a href="#" onClick="browseEvents()" id="hide options"> Click to remove options</a> </p>
 <div id="browse">
-<table border="1" cellpadding="5">
+<table border="1" cellpadding="5" id="event-table">
   <thead>
     <tr>
         <th>Event ID</th>
         <th>Event Name</th>
         <th>Event Date</th>
         <th>Event Type</th>
+        <th>Organizer ID</th>
+        <th></th>
 
     </tr>
   </thead>
@@ -73,7 +75,7 @@
         <td>{{this.eventName}}</td>
         <td>{{this.eventDate}}</td>
         <td>{{this.eventType}}</td>
-
+        <td>{{this.organizerID}}</td>
         <td><button onclick="deleteEvent({{this.eventID}})">Delete</button></td>
     </tr>
     {{/each}}
@@ -89,14 +91,14 @@
         <legend><strong>Add Event</strong></legend>
           <fieldset class="fields">
             <label> Event Name </label> <input type="text" name="input-eventName">
-            <label> Event Date </label> <input type="text" name="input-eventDate">
+            <label> Event Date </label> <input type="date" name="input-eventDate">
             <label> Event Type </label> <select name="input-eventType">
             	<option value="">Select Event Type</option>
                 <option value="Concert">Concert</option>
                 <option value="Stand Up">Stand Up</option>
                 <option value="Conference">Conference</option>
                 </select>
-            <label> Organizer ID </label> <input type="number" name="input-organizerID">
+            <label> Organizer ID </label> <input type="number" name="input-organizerID" id="input-event-organizerID">
       </fieldset>
           <input class="btn" type="submit" id="addEventID" value="Add Event">
           <input class="btn" type="button" value="Cancel" onClick="browseEvents()">
@@ -117,8 +119,14 @@
             </select>
 
              <label for="update-event-date">Event Date</label>
-            <input type="text" id="update-event-date" name="update-event-date">
-            <input type="hidden" id="input-event-organizerid" name="organizerIDValue" value="{{currentOrganizerID}}">
+            <input type="date" id="update-event-date" name="update-event-date">
+            <label for="organizerIDValue"> Select an Organizer</label>
+            <select id="input-event-organizerid" name="organizerIDValue">
+              <option value="">None</option>
+              {{#each organizers}}
+                <option value="{{this.organizerID}}">{{this.firstName}} {{this.lastName}}</option>
+              {{/each}}
+            </select>
       </fieldset>
           <input class="btn" type="submit" id="updateEventBtn" value="Update Event">
           <input class="btn" type="button" value="Cancel" onClick="browseEvents()">

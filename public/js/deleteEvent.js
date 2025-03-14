@@ -32,7 +32,7 @@ function deleteRow(eventID){
 }
 
 function deleteDropDownMenu(eventID){
-  let selectMenu = document.getElementById("event-select-name");
+  let selectMenu = document.getElementById("update-event-id-and-name");
   for (let i = 0; i < selectMenu.length; i++){
     if (Number(selectMenu.options[i].value) === Number(eventID)){
       selectMenu[i].remove();

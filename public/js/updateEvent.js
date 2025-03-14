@@ -40,7 +40,7 @@ updatePersonForm.addEventListener("submit", (e) => {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
 
             // Add the new data to the table
-            updateEventRow(eventDateValue, eventIDNameValue);
+            updateEventRow([eventDateValue, organizerIDValue], eventIDNameValue);
 
         }
         else if (xhttp.readyState == 4 && xhttp.status != 200) {
@@ -53,17 +53,32 @@ updatePersonForm.addEventListener("submit", (e) => {
 });
 
 function updateEventRow(data, eventID) {
-    //let eventDate = data[1];
+
+    eventDate = data[0]
+    organizerID = data[1]
+
+    console.log("The date is ", eventDate)
+    console.log("the organizer is ", organizerID)
 
     let table = document.getElementById("event-table");
 
     for (let i = 0, row; row = table.rows[i]; i++) {
         if (table.rows[i].getAttribute("data-value") == eventID) {
+
             let updateRowIndex = table.getElementsByTagName("tr")[i];
 
-            let td_eventDate   = updateRowIndex.getElementsByTagName("td")[3];
+            console.log("The table index to update is ", updateRowIndex)
+
+            let td_eventDate   = updateRowIndex.getElementsByTagName("td")[2];
+            let td_organizerID   = updateRowIndex.getElementsByTagName("td")[4];
+
+            console.log(td_eventDate, td_organizerID)
 
             td_eventDate.innerHTML = eventDate;
+            td_organizerID.innerHTML = organizerID
+            
+            break; 
         }
+        
     }
 }
