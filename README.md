@@ -1,15 +1,55 @@
-All code was based on 
+Overview
 
-Node.js Exploration: https://canvas.oregonstate.edu/courses/1987790/pages/exploration-developing-in-node-dot-js?module_item_id=25023025
+A full-stack database-driven application built with Node.js, Express, Handlebars (templating), and MySQL. Originally inspired by a Node.js starter app and tailored for custom CRUD operations. It features dynamic tables enhanced with CSS styling, a responsive navigation bar, and MySQL integration.
 
-nodejs-starter-app: https://github.com/osu-cs340-ecampus/nodejs-starter-app
+Features
 
-For the update function, we adapted the parameters for the updateRow function to take in previous variables established instead of using the xhttp response. This fixed issues with updateRow function as the proper data was not coming from the response for some reason. 
+CRUD Functionality: Create, read, update, and delete database entries via a web interface.
 
-We used some of the styling from the two websites below.
+Templating: Uses Handlebars for server-side rendering of HTML views.
 
-For the tables:
-Adapted from dev.to: https://dev.to/dcodeyt/creating-beautiful-html-tables-with-css-428l
+Styling:
 
-For the Nav Bar:
-Adapted from W3School: https://www.w3schools.com/howto/howto_js_topnav.asp
+Data tables styled for readability and aesthetics (based on a dev.to tutorial). 
+GitHub
+
+Navigation bar adapted from W3Schools—a responsive, user-friendly UI. 
+GitHub
+
+Node.js Foundation: Forked or based on OSU’s Node.js exploration project and starter app. 
+GitHub
+
+Modular & Readable Codebase: Separation of code across database, pages, views, and app logic.
+
+Tech Stack
+
+Backend: Node.js, Express.js
+
+Database: MySQL
+
+Templating: Handlebars (HTML generation)
+
+Frontend: HTML, CSS, (likely) vanilla JavaScript
+
+Styling Resources:
+
+Table layout from dev.to tutorial 
+GitHub
+
+Navigation bar from W3Schools 
+GitHub
+
+Repository Structure
+├── app.js                  # Main app entry point
+├── database/               # Database schema and connection files
+├── views/                  # Handlebars templates
+├── pages/                  # Express route handlers or page controllers
+├── public/
+│   ├── style.css           # Site-wide styles
+│   └── (other static assets)
+├── cs340_Portfolio/        # Portfolio-related content (if relevant)
+├── package.json            # Project dependencies & scripts
+├── package-lock.json       # Lockfile for npm
+├── ssh/                     # SSH configs (if needed)
+├── README.md               # This file
+└── node_modules/            # Installed dependencies
